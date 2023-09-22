@@ -19,10 +19,12 @@ namespace RecrutamentoApi.Dados
         public DbSet<Proficiencia> Proficiencias { get; set; }
         public DbSet<Vaga> Vagas { get; set; }
         public DbSet<Inscricao> Inscricoes { get; set; }
+        public DbSet<Curriculo> Curriculos { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new CandidatoConfiguration());
+            modelBuilder.ApplyConfiguration(new CurriculoConfiguration());
             modelBuilder.ApplyConfiguration(new EmpresaConfiguration());
             modelBuilder.ApplyConfiguration(new ProficienciasConfiguration());
             modelBuilder.ApplyConfiguration(new VagaConfiguration());

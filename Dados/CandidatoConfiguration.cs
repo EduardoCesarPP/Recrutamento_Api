@@ -11,12 +11,8 @@ namespace RecrutamentoApi.Dados
         public void Configure(EntityTypeBuilder<Candidato> builder)
         {
             builder
-                .Property(c => c.DataNascimento)
-                .HasColumnType("date");
-
-            builder
-                .Property(c => c.Nome)
-                .IsRequired();
+    .Property(c => c.Nome)
+    .IsRequired();
 
             builder
                 .Property(c => c.Sobrenome)
@@ -31,53 +27,16 @@ namespace RecrutamentoApi.Dados
                 .IsRequired();
 
             builder
-                .Property(c => c.DataNascimento)
-                .IsRequired();
+                .HasOne(c => c.Curriculo)
+                .WithOne(c => c.Candidato)
+                .HasForeignKey<Curriculo>(e => e.CandidatoId)
+                .IsRequired(false);
 
-            builder
-                .Property(c => c.TextoGenero)
-                .IsRequired();
-
-            builder
-                .Property(c => c.Raca)
-                .IsRequired();
-
-            builder
-                .Property(c => c.EnderecoId)
-                .IsRequired();
 
             builder
                .HasAlternateKey(c => new { c.Nome, c.Sobrenome });
-                       
-            builder
-                .HasOne(c => c.Endereco)
-                .WithMany(e => e.Candidatos);
-
-            builder
-                .HasMany(c => c.FormacoesAcademicas)
-                .WithOne(f => f.Candidato);
-
-            builder
-                .HasMany(c => c.Certificacoes)
-                .WithOne(c => c.Candidato);
-
-            builder
-                .HasMany(c => c.ExperienciasProfissionais)
-                .WithOne(e => e.Candidato);
 
 
-            builder
-                .Property(e => e.TextosDeficiencias)
-                .HasConversion(
-                    lista => string.Join(",", lista.ToArray()),
-                    concat => (string.IsNullOrEmpty(concat) ? null : concat.Split(new[] { ',' })
-                        .Cast<string>()
-                        .ToList())
-            );
-
-            builder.Ignore(c => c.Genero);
-            builder.Ignore(c => c.Raca);
-            builder.Ignore(c => c.Deficiencias);
 
         }
     }

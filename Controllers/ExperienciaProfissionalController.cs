@@ -32,7 +32,7 @@ namespace RecrutamentoApi.Controllers
         [HttpGet("candidato/{id}")]
         public IEnumerable<ReadExperienciaProfissionalDto> Listar(int id, [FromQuery] int skip = 0, [FromQuery] int take = 50)
         {
-            return _mapper.Map<List<ReadExperienciaProfissionalDto>>(_context.Candidatos.Where(c => c.Id == id).FirstOrDefault().ExperienciasProfissionais.ToList());
+            return _mapper.Map<List<ReadExperienciaProfissionalDto>>(_context.Curriculos.Where(c => c.CandidatoId == id).FirstOrDefault().ExperienciasProfissionais.ToList());
         }
     }
 }

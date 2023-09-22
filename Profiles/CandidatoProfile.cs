@@ -8,11 +8,9 @@ namespace RecrutamentoApi.Profiles
     {
         public CandidatoProfile()
         {
-            CreateMap<CreateCandidatoDto, Candidato>()
-                .ForMember(candidato => candidato.Deficiencias, opt => opt.MapFrom(candidatoDto => candidatoDto.Deficiencias));
+            CreateMap<CreateCandidatoDto, Candidato>();
 
-            CreateMap<Candidato, ReadCandidatoDto>()
-                .ForMember(candidatoDto => candidatoDto.Endereco, opt => opt.MapFrom(candidato => candidato.Endereco));
+            CreateMap<Candidato, ReadCandidatoDto>();
 
         }
 

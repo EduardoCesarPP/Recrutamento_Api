@@ -9,6 +9,6 @@
         public string Cidade { get; set; }
         public string Estado { get; set; }
         public virtual List<Empresa> Empresas { get; set; }
-        public virtual List<Candidato> Candidatos { get; set; }
+        public virtual List<Curriculo> Curriculos { get; set; }
     }
 }

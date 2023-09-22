@@ -32,7 +32,7 @@ namespace RecrutamentoApi.Controllers
         [HttpGet("candidato/{id}")]
         public IEnumerable<ReadFormacaoAcademicaDto> Listar(int id, [FromQuery] int skip = 0, [FromQuery] int take = 50)
         {
-            return _mapper.Map<List<ReadFormacaoAcademicaDto>>(_context.Candidatos.Where(c => c.Id == id).FirstOrDefault().FormacoesAcademicas.ToList());
+            return _mapper.Map<List<ReadFormacaoAcademicaDto>>(_context.Curriculos.Where(c => c.CandidatoId == id).FirstOrDefault().FormacoesAcademicas.ToList());
         }
     }
 }

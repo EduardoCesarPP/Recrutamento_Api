@@ -12,13 +12,13 @@ namespace RecrutamentoApi.Dados
         {
 
             builder
-                .HasKey(proficiencia => new { proficiencia.CandidatoId, proficiencia.IdiomaId });
+                .HasKey(proficiencia => new { proficiencia.CurriculoId, proficiencia.IdiomaId });
 
             // Relação Sessao n:1 Cinema
             builder
-                .HasOne(proficiencia => proficiencia.Candidato)
+                .HasOne(proficiencia => proficiencia.Curriculo)
                 .WithMany(candidato => candidato.Proficiencias)
-                .HasForeignKey(idioma => idioma.CandidatoId);
+                .HasForeignKey(idioma => idioma.CurriculoId);
 
             // Relação Sessao n:1 Filme
             builder

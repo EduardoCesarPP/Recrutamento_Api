@@ -34,7 +34,16 @@ namespace RecrutamentoApi.Controllers
         [HttpGet("candidato/{id}")]
         public IEnumerable<ReadProficienciaDto> Listar(int id, [FromQuery] int skip = 0, [FromQuery] int take = 50)
         {
-            return _mapper.Map<List<ReadProficienciaDto>>(_context.Candidatos.Where(c => c.Id == id).FirstOrDefault().Proficiencias.ToList());
+            return _mapper.Map<List<ReadProficienciaDto>>(_context.Curriculos.Where(c => c.CandidatoId == id).FirstOrDefault().Proficiencias.ToList());
+        }
+
+
+
+        [HttpPost("teste")]
+        public IActionResult Teste(Teste teste)
+        {
+            Console.WriteLine(teste.dadosRM);
+            return Ok();
         }
     }
 }

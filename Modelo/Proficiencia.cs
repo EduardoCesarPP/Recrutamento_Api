@@ -4,8 +4,8 @@ namespace RecrutamentoApi.Modelo
 {
     public class Proficiencia
     {
-        public virtual Candidato Candidato { get; set; }
-        public int? CandidatoId { get; set; }
+        public virtual Curriculo Curriculo { get; set; }
+        public int? CurriculoId { get; set; }
         public virtual Idioma Idioma { get; set; }
         public int? IdiomaId { get; set; }
         public string TextoNivelProficiencia { get; private set; }
