@@ -9,7 +9,7 @@ namespace RecrutamentoApi.Dados.Dtos
         public DateOnly DataNascimento { get; set; }
         public string Genero { get; private set; }
         public string Raca { get; private set; }
-        public Deficiencia Deficiencias { get; private set; }
+        public Deficiencias Deficiencias { get; private set; }
         public ReadEnderecoDto Endereco { get; set; }
         public int EnderecoId { get; set; }
         public string LinkedIn { get; set; }

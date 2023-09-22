@@ -24,15 +24,29 @@ namespace RecrutamentoApi.Controllers
 
         public IActionResult AdicionaFormacaoAcademica([FromBody] CreateFormacaoAcademicaDto formacaoAcademicaDto)
         {
-            FormacaoAcademica formacaoAcademica = _mapper.Map<FormacaoAcademica>(formacaoAcademicaDto);
-            _context.FormacoesAcademicas.Add(formacaoAcademica);
-            _context.SaveChanges();
-            return Ok();
+            try
+            {
+                FormacaoAcademica formacaoAcademica = _mapper.Map<FormacaoAcademica>(formacaoAcademicaDto);
+                _context.FormacoesAcademicas.Add(formacaoAcademica);
+                _context.SaveChanges();
+                return CreatedAtAction(nameof(Listar), new { id = formacaoAcademica.CurriculoId }, formacaoAcademica);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
         }
         [HttpGet("candidato/{id}")]
-        public IEnumerable<ReadFormacaoAcademicaDto> Listar(int id, [FromQuery] int skip = 0, [FromQuery] int take = 50)
+        public IActionResult Listar(int id, [FromQuery] int skip = 0, [FromQuery] int take = 50)
         {
-            return _mapper.Map<List<ReadFormacaoAcademicaDto>>(_context.Curriculos.Where(c => c.CandidatoId == id).FirstOrDefault().FormacoesAcademicas.ToList());
+            try
+            {
+                return Ok(_mapper.Map<List<ReadFormacaoAcademicaDto>>(_context.Curriculos.Where(c => c.CandidatoId == id).FirstOrDefault().FormacoesAcademicas.ToList()));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
         }
     }
 }

@@ -1,8 +1,10 @@
-﻿namespace RecrutamentoApi.Dados.Dtos
+﻿using RecrutamentoApi.Modelo;
+
+namespace RecrutamentoApi.Dados.Dtos
 {
     public class LoginDto
     {
-        public string Email { get; set; }
-        public string Senha { get; set; }
+        public string TipoAcesso { get; set; }
+        public int Id { get; set; }
     }
 }

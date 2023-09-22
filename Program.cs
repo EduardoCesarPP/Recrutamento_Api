@@ -17,6 +17,10 @@ builder.Services.AddDbContext<RecrutamentoContext>(opts => opts.UseLazyLoadingPr
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
+builder.Services.AddControllersWithViews()
+    .AddNewtonsoftJson(options =>
+    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+);
 
 var app = builder.Build();
 

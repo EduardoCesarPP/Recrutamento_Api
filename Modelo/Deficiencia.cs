@@ -1,6 +1,6 @@
 ﻿namespace RecrutamentoApi.Modelo
 {
-    public class Deficiencia
+    public class Deficiencias
     {
         public bool Fisica { get; set; }
         public bool Auditiva { get; set; }

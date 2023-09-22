@@ -24,16 +24,30 @@ namespace RecrutamentoApi.Controllers
 
         public IActionResult AdicionaCertificacao([FromBody] CreateCertificacaoDto certificacaoDto)
         {
-            Certificacao certificacao = _mapper.Map<Certificacao>(certificacaoDto);
-            _context.Certificacoes.Add(certificacao);
-            _context.SaveChanges();
-            return Ok();
+            try
+            {
+                Certificacao certificacao = _mapper.Map<Certificacao>(certificacaoDto);
+                _context.Certificacoes.Add(certificacao);
+                _context.SaveChanges();
+                return CreatedAtAction(nameof(Listar), new { id = certificacao.CurriculoId }, certificacao);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
         }
 
         [HttpGet("candidato/{id}")]
-        public IEnumerable<ReadCertificacaoDto> Listar(int id, [FromQuery] int skip = 0, [FromQuery] int take = 50)
+        public IActionResult Listar(int id, [FromQuery] int skip = 0, [FromQuery] int take = 50)
         {
-            return _mapper.Map<List<ReadCertificacaoDto>>(_context.Curriculos.Where(c => c.CandidatoId == id).FirstOrDefault().Certificacoes.ToList());
+            try
+            {
+                return Ok(_mapper.Map<List<ReadCertificacaoDto>>(_context.Curriculos.Where(c => c.CandidatoId == id).FirstOrDefault().Certificacoes.ToList()));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
         }
     }
 }

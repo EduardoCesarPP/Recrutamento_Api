@@ -8,12 +8,12 @@ namespace RecrutamentoApi.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class EmpresaController : ControllerBase
+    public class AdmnistradorController : ControllerBase
     {
         private RecrutamentoContext _context;
         private IMapper _mapper;
 
-        public EmpresaController(RecrutamentoContext context, IMapper mapper)
+        public AdmnistradorController(RecrutamentoContext context, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;
@@ -22,15 +22,14 @@ namespace RecrutamentoApi.Controllers
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
 
-        public IActionResult AdicionaEmpresa([FromBody] CreateEmpresaDto empresaDto)
+        public IActionResult Adiciona([FromBody] CreateAdmnistradorDto admnistradorDto)
         {
             try
             {
-                Empresa empresa = _mapper.Map<Empresa>(empresaDto);
-                _context.Enderecos.Add(empresa.Endereco);
-                _context.Empresas.Add(empresa);
+                Admnistrador admnistrador = _mapper.Map<Admnistrador>(admnistradorDto);
+                _context.Admnistradores.Add(admnistrador);
                 _context.SaveChanges();
-                return CreatedAtAction(nameof(RecuperaEmpresaPorId), new { id = empresa.Id }, empresa);
+                return CreatedAtAction(nameof(RecuperaPorId), new { id = admnistrador.Id }, admnistrador);
             }
             catch (Exception ex)
             {
@@ -39,14 +38,14 @@ namespace RecrutamentoApi.Controllers
         }
 
         [HttpGet("{id}")]
-        public IActionResult RecuperaEmpresaPorId(int id)
+        public IActionResult RecuperaPorId(int id)
         {
             try
             {
-                var empresa = _context.Empresas.FirstOrDefault(empresa => empresa.Id == id);
-                if (empresa == null) return NotFound();
-                var empresaDto = _mapper.Map<ReadEmpresaDto>(empresa);
-                return Ok(empresaDto);
+                var admnistrador = _context.Admnistradores.FirstOrDefault(admnistrador => admnistrador.Id == id);
+                if (admnistrador == null) return NotFound();
+                var admnistradorDto = _mapper.Map<ReadAdmnistradorDto>(admnistrador);
+                return Ok(admnistradorDto);
             }
             catch (Exception ex)
             {
@@ -55,11 +54,11 @@ namespace RecrutamentoApi.Controllers
         }
 
         [HttpGet]
-        public IActionResult RecuperaEmpresas([FromQuery] int skip = 0, [FromQuery] int take = 50)
+        public IActionResult Recupera([FromQuery] int skip = 0, [FromQuery] int take = 50)
         {
             try
             {
-                return Ok(_mapper.Map<List<ReadEmpresaDto>>(_context.Empresas.Skip(skip).Take(take).ToList()));
+                return Ok(_mapper.Map<List<ReadAdmnistradorDto>>(_context.Admnistradores.Skip(skip).Take(take).ToList()));
             }
             catch (Exception ex)
             {
@@ -72,12 +71,12 @@ namespace RecrutamentoApi.Controllers
         {
             try
             {
-                var empresa = _context.Empresas.FirstOrDefault(empresa => empresa.Email == email && empresa.Senha == senha);
-                if (empresa == null)
+                var admnistrador = _context.Admnistradores.FirstOrDefault(admnistrador => admnistrador.Email == email && admnistrador.Senha == senha);
+                if (admnistrador == null)
                 {
                     Response.StatusCode = 404;
                 }
-                return Ok(_mapper.Map<ReadEmpresaDto>(empresa));
+                return Ok(_mapper.Map<ReadAdmnistradorDto>(admnistrador));
             }
             catch (Exception ex)
             {
@@ -86,7 +85,7 @@ namespace RecrutamentoApi.Controllers
         }
 
         [HttpPut("{id}")]
-        public IActionResult AtualizaEmpresa(int id, [FromBody] UpdateEmpresaDto curriculoDto)
+        public IActionResult Atualiza(int id, [FromBody] UpdateAdmnistradorDto curriculoDto)
         {
             try
             {
@@ -103,7 +102,7 @@ namespace RecrutamentoApi.Controllers
         }
 
         [HttpDelete("{id}")]
-        public IActionResult DeletaCurriculo(int id)
+        public IActionResult Deleta(int id)
         {
             try
             {

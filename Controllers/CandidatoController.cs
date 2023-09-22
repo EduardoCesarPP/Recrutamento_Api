@@ -23,57 +23,90 @@ namespace RecrutamentoApi.Controllers
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
 
-      
+
         public IActionResult AdicionaCandidato([FromBody] CreateCandidatoDto candidatoDto)
         {
-            Candidato candidato = _mapper.Map<Candidato>(candidatoDto);
-            _context.Candidatos.Add(candidato);
-            _context.SaveChanges();
-            return Ok();
-            return CreatedAtAction(nameof(RecuperaCandidatoPorId), new { id = candidato.Id }, candidato);
+            try
+            {
+                Candidato candidato = _mapper.Map<Candidato>(candidatoDto);
+                _context.Candidatos.Add(candidato);
+                _context.SaveChanges();
+                return CreatedAtAction(nameof(RecuperaCandidatoPorId), new { id = candidato.Id }, candidato);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
         }
 
         [HttpDelete("{id}")]
         public IActionResult DeletaCandidato(int id)
         {
-            var candidato = _context.Candidatos.FirstOrDefault(candidato => candidato.Id == id);
-            if (candidato == null) return NotFound();
-            _context.Remove(candidato);
-            _context.SaveChanges();
-            return NoContent();
+            try
+            {
+                var candidato = _context.Candidatos.FirstOrDefault(candidato => candidato.Id == id);
+                if (candidato == null) return NotFound();
+                _context.Remove(candidato);
+                _context.SaveChanges();
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
         }
-        
+
         [HttpGet("{id}")]
         public IActionResult RecuperaCandidatoPorId(int id)
         {
-            var candidato = _context.Candidatos.FirstOrDefault(candidato => candidato.Id == id);
-            if (candidato == null) return NotFound();
-            var candidatoDto = _mapper.Map<ReadCandidatoDto>(candidato);
-            return Ok(candidatoDto);
+            try
+            {
+                var candidato = _context.Candidatos.FirstOrDefault(candidato => candidato.Id == id);
+                if (candidato == null) return NotFound();
+                var candidatoDto = _mapper.Map<ReadCandidatoDto>(candidato);
+                return Ok(candidatoDto);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
         }
 
         [HttpGet("login")]
-        public ReadCandidatoDto Login([FromQuery] string email, [FromQuery] string senha)
+        public IActionResult Login([FromQuery] string email, [FromQuery] string senha)
         {
-
-            var candidato = _context.Candidatos.FirstOrDefault(candidato => candidato.Email == email && candidato.Senha == senha);
-            if (candidato == null) {
-                Response.StatusCode = 404;
+            try
+            {
+                var candidato = _context.Candidatos.FirstOrDefault(candidato => candidato.Email == email && candidato.Senha == senha);
+                if (candidato == null)
+                {
+                    return NotFound();
+                }
+                return Ok(_mapper.Map<ReadCandidatoDto>(candidato));
             }
-            return _mapper.Map<ReadCandidatoDto>(candidato);
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
         }
 
         [HttpGet]
-        public IEnumerable<ReadCandidatoDto> RecuperaCandidatos(
+        public IActionResult RecuperaCandidatos(
             [FromQuery] int skip = 0,
             [FromQuery] int take = 50,
             [FromQuery] List<string>? nomesIdiomas = null,
             [FromQuery] List<string>? nomesRacas = null,
             [FromQuery] List<string>? nomesDeficiencias = null)
         {
-            var candidatos = _context.Candidatos.Skip(skip).Take(take).ToList();
-
-            return _mapper.Map<List<ReadCandidatoDto>>(candidatos);
+            try
+            {
+                var candidatos = _context.Candidatos.Skip(skip).Take(take).ToList();
+                return Ok(_mapper.Map<List<ReadCandidatoDto>>(candidatos));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
         }
     }
 }

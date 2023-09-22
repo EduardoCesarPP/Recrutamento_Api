@@ -20,6 +20,7 @@ namespace RecrutamentoApi.Dados
         public DbSet<Vaga> Vagas { get; set; }
         public DbSet<Inscricao> Inscricoes { get; set; }
         public DbSet<Curriculo> Curriculos { get; set; }
+        public DbSet<Admnistrador> Admnistradores { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

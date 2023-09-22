@@ -25,25 +25,30 @@ namespace RecrutamentoApi.Controllers
 
         public IActionResult AdicionaProficiencia([FromBody] CreateProficienciaDto proficienciaDto)
         {
-            Proficiencia proficiencia = _mapper.Map<Proficiencia>(proficienciaDto);
-            _context.Proficiencias.Add(proficiencia);
-            _context.SaveChanges();
-            return Ok();
+            try
+            {
+                Proficiencia proficiencia = _mapper.Map<Proficiencia>(proficienciaDto);
+                _context.Proficiencias.Add(proficiencia);
+                _context.SaveChanges();
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
         }
 
         [HttpGet("candidato/{id}")]
-        public IEnumerable<ReadProficienciaDto> Listar(int id, [FromQuery] int skip = 0, [FromQuery] int take = 50)
+        public IActionResult Listar(int id, [FromQuery] int skip = 0, [FromQuery] int take = 50)
         {
-            return _mapper.Map<List<ReadProficienciaDto>>(_context.Curriculos.Where(c => c.CandidatoId == id).FirstOrDefault().Proficiencias.ToList());
-        }
-
-
-
-        [HttpPost("teste")]
-        public IActionResult Teste(Teste teste)
-        {
-            Console.WriteLine(teste.dadosRM);
-            return Ok();
+            try
+            {
+                return Ok(_mapper.Map<List<ReadProficienciaDto>>(_context.Curriculos.Where(c => c.CandidatoId == id).FirstOrDefault().Proficiencias.ToList()));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
         }
     }
 }

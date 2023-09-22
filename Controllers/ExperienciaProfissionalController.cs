@@ -24,15 +24,29 @@ namespace RecrutamentoApi.Controllers
 
         public IActionResult AdicionaExperienciaProfissional([FromBody] CreateExperienciaProfissionalDto experienciaProfissionalDto)
         {
-            ExperienciaProfissional experienciaProfissional = _mapper.Map<ExperienciaProfissional>(experienciaProfissionalDto);
-            _context.ExperienciasProfissionais.Add(experienciaProfissional);
-            _context.SaveChanges();
-            return Ok();
+            try
+            {
+                ExperienciaProfissional experienciaProfissional = _mapper.Map<ExperienciaProfissional>(experienciaProfissionalDto);
+                _context.ExperienciasProfissionais.Add(experienciaProfissional);
+                _context.SaveChanges();
+                return CreatedAtAction(nameof(Listar), new { id = experienciaProfissional.CurriculoId }, experienciaProfissional);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
         }
         [HttpGet("candidato/{id}")]
-        public IEnumerable<ReadExperienciaProfissionalDto> Listar(int id, [FromQuery] int skip = 0, [FromQuery] int take = 50)
+        public IActionResult Listar(int id, [FromQuery] int skip = 0, [FromQuery] int take = 50)
         {
-            return _mapper.Map<List<ReadExperienciaProfissionalDto>>(_context.Curriculos.Where(c => c.CandidatoId == id).FirstOrDefault().ExperienciasProfissionais.ToList());
+            try
+            {
+                return Ok(_mapper.Map<List<ReadExperienciaProfissionalDto>>(_context.Curriculos.Where(c => c.CandidatoId == id).FirstOrDefault().ExperienciasProfissionais.ToList()));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
         }
     }
 }

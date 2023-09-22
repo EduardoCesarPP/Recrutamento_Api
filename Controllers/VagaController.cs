@@ -25,25 +25,46 @@ namespace RecrutamentoApi.Controllers
 
         public IActionResult AdicionaVaga([FromBody] CreateVagaDto vagaDto)
         {
-            Vaga vaga = _mapper.Map<Vaga>(vagaDto);
-            _context.Vagas.Add(vaga);
-            _context.SaveChanges();
-            return Ok();
+            try
+            {
+                Vaga vaga = _mapper.Map<Vaga>(vagaDto);
+                _context.Vagas.Add(vaga);
+                _context.SaveChanges();
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
         }
 
         [HttpGet("{id}")]
         public IActionResult RecuperaVagaPorId(int id)
         {
-            var vaga = _context.Vagas.FirstOrDefault(vaga => vaga.Id == id);
-            if (vaga == null) return NotFound();
-            var vagaDto = _mapper.Map<ReadVagaDto>(vaga);
-            return Ok(vagaDto);
+            try
+            {
+                var vaga = _context.Vagas.FirstOrDefault(vaga => vaga.Id == id);
+                if (vaga == null) return NotFound();
+                var vagaDto = _mapper.Map<ReadVagaDto>(vaga);
+                return Ok(vagaDto);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
         }
 
         [HttpGet("empresa/{id}")]
-        public IEnumerable<ReadVagaDto> RecuperaVagasPorEmpresa(int id, [FromQuery] int skip = 0, [FromQuery] int take = 50)
+        public IActionResult RecuperaVagasPorEmpresa(int id, [FromQuery] int skip = 0, [FromQuery] int take = 50)
         {
-            return _mapper.Map<List<ReadVagaDto>>(_context.Vagas.Skip(skip).Take(take).Where(v => v.EmpresaId == id).ToList());
+            try
+            {
+                return Ok(_mapper.Map<List<ReadVagaDto>>(_context.Vagas.Skip(skip).Take(take).Where(v => v.EmpresaId == id).ToList()));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
         }
     }
 }

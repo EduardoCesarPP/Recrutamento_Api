@@ -22,83 +22,125 @@ namespace RecrutamentoApi.Controllers
 
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
-
         public IActionResult AdicionaCurriculo([FromBody] CreateCurriculoDto curriculoDto)
         {
-            Curriculo curriculo = _mapper.Map<Curriculo>(curriculoDto);
-            _context.Enderecos.Add(curriculo.Endereco);
-            _context.Curriculos.Add(curriculo);
-            _context.SaveChanges();
-            return Ok();
+            try
+            {
+                Curriculo curriculo = _mapper.Map<Curriculo>(curriculoDto);
+                _context.Enderecos.Add(curriculo.Endereco);
+                _context.Curriculos.Add(curriculo);
+                _context.SaveChanges();
+                return CreatedAtAction(nameof(RecuperaCurriculoPorId), new { id = curriculo.CandidatoId }, curriculo);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
         }
 
 
         [HttpPut("{id}")]
         public IActionResult AtualizaCurriculo(int id, [FromBody] UpdateCurriculoDto curriculoDto)
         {
-            var curriculo = _context.Curriculos.FirstOrDefault(curriculo => curriculo.CandidatoId == id);
-            if (curriculo == null) return NotFound();
-            _mapper.Map(curriculoDto, curriculo);
-            _context.SaveChanges();
-            return NoContent();
+            try
+            {
+                var curriculo = _context.Curriculos.FirstOrDefault(curriculo => curriculo.CandidatoId == id);
+                if (curriculo == null) return NotFound();
+                _mapper.Map(curriculoDto, curriculo);
+                _context.SaveChanges();
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
         }
 
         [HttpDelete("{id}")]
         public IActionResult DeletaCurriculo(int id)
         {
-            var curriculo = _context.Curriculos.FirstOrDefault(curriculo => curriculo.CandidatoId == id);
-            if (curriculo == null) return NotFound();
-            _context.Remove(curriculo);
-            _context.SaveChanges();
-            return NoContent();
+            try
+            {
+                var curriculo = _context.Curriculos.FirstOrDefault(curriculo => curriculo.CandidatoId == id);
+                if (curriculo == null) return NotFound();
+                _context.Remove(curriculo);
+                _context.SaveChanges();
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
         }
 
         [HttpGet("{id}")]
         public IActionResult RecuperaCurriculoPorId(int id)
         {
-            var curriculo = _context.Curriculos.FirstOrDefault(curriculo => curriculo.CandidatoId == id);
-            if (curriculo == null) return NotFound();
-            var curriculoDto = _mapper.Map<ReadCurriculoDto>(curriculo);
-            return Ok(curriculoDto);
+            try
+            {
+                var curriculo = _context.Curriculos.FirstOrDefault(curriculo => curriculo.CandidatoId == id);
+                if (curriculo == null) return NotFound();
+                var curriculoDto = _mapper.Map<ReadCurriculoDto>(curriculo);
+                return Ok(curriculoDto);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
         }
 
         [HttpGet]
-        public IEnumerable<ReadCurriculoDto> RecuperaCurriculos(
+        public IActionResult RecuperaCurriculos(
             [FromQuery] int skip = 0,
             [FromQuery] int take = 50,
             [FromQuery] List<string>? nomesIdiomas = null,
             [FromQuery] List<string>? nomesRacas = null,
-            [FromQuery] List<string>? nomesDeficiencias = null)
+            [FromQuery] bool? deficienciaVisual = null,
+
+            [FromQuery] bool? deficienciaAuditiva = null,
+            [FromQuery] bool? deficienciaAutista = null,
+            [FromQuery] bool? deficienciaFisica = null,
+            [FromQuery] bool? deficienciaIntelectual = null
+            )
         {
-            var curriculos = _context.Curriculos.Skip(skip).Take(take).ToList();
-            if (nomesIdiomas != null && nomesIdiomas.Count() > 0)
+            try
             {
-                curriculos = curriculos.Where(curriculo => curriculo.Proficiencias is not null && curriculo.Proficiencias.Any(proficiencia => nomesIdiomas.Contains(proficiencia.Idioma.Nome))).ToList();
+                var curriculos = _context.Curriculos.Skip(skip).Take(take).ToList();
+                if (nomesIdiomas != null && nomesIdiomas.Count() > 0)
+                {
+                    curriculos = curriculos.Where(curriculo => curriculo.Proficiencias is not null && curriculo.Proficiencias.Any(proficiencia => nomesIdiomas.Contains(proficiencia.Idioma.Nome))).ToList();
+                }
+                if (nomesRacas != null && nomesRacas.Count() > 0)
+                {
+                    curriculos = curriculos.Where(curriculo => nomesRacas.Contains(curriculo.Raca.ParaString())).ToList();
+                }
+                if (deficienciaAuditiva is not null && (bool)deficienciaAuditiva)
+                {
+                    curriculos = curriculos.Where(curriculo => curriculo.DeficienciaAuditiva).ToList();
+                }
+                if (deficienciaAutista is not null && (bool)deficienciaAutista)
+                {
+                    curriculos = curriculos.Where(curriculo => curriculo.DeficienciaAutista).ToList();
+                }
+                if (deficienciaFisica is not null && (bool)deficienciaFisica)
+                {
+                    curriculos = curriculos.Where(curriculo => curriculo.DeficienciaFisica).ToList();
+                }
+                if (deficienciaVisual is not null && (bool)deficienciaVisual)
+                {
+                    curriculos = curriculos.Where(curriculo => curriculo.DeficienciaVisual).ToList();
+                }
+                if (deficienciaIntelectual is not null && (bool)deficienciaIntelectual)
+                {
+                    curriculos = curriculos.Where(curriculo => curriculo.DeficienciaIntelectual).ToList();
+                }
+                
+                return Ok(_mapper.Map<List<ReadCurriculoDto>>(curriculos));
             }
-            if (nomesRacas != null && nomesRacas.Count() > 0)
+            catch (Exception ex)
             {
-                curriculos = curriculos.Where(curriculo => nomesRacas.Contains(curriculo.Raca.ParaString())).ToList();
+                return BadRequest(ex);
             }
-            //if (nomesDeficiencias != null && nomesDeficiencias.Count() > 0)
-            //{
-            //    curriculos = curriculos.Where(curriculo => curriculo.Deficiencias is not null && curriculo.Deficiencias.Any(deficiencia => nomesDeficiencias.Contains(deficiencia.ParaString()))).ToList();
-
-            //    //var aux = new List<Curriculo>(curriculos);
-            //    //curriculos.ForEach(curriculo =>
-            //    //{
-            //    //    nomesDeficiencias.ForEach(nomeDeficiencia =>
-            //    //    {
-            //    //        if (curriculo.TextosDeficiencias is null || !curriculo.TextosDeficiencias.Contains(nomeDeficiencia))
-            //    //        {
-            //    //            aux.Remove(curriculo);
-            //    //        }
-            //    //    });
-            //    //});
-            //    //curriculos = aux;
-
-            //}
-
-            return _mapper.Map<List<ReadCurriculoDto>>(curriculos);
         }
     }
 }
