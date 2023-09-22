@@ -53,10 +53,10 @@ namespace RecrutamentoApi.Controllers
         }
 
         [HttpGet("login")]
-        public IActionResult Login([FromBody] LoginDto loginDto)
+        public IActionResult Login([FromQuery] string email, [FromQuery] string senha)
         {
 
-            var candidato = _context.Candidatos.FirstOrDefault(candidato => candidato.Email == loginDto.Email && candidato.Senha == loginDto.Senha);
+            var candidato = _context.Candidatos.FirstOrDefault(candidato => candidato.Email == email && candidato.Senha == senha);
             if (candidato == null) return NotFound();
             return Ok();
         }

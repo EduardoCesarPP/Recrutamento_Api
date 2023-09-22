@@ -37,8 +37,6 @@ namespace RecrutamentoApi.Controllers
         public IActionResult AtualizaCurriculo(int id, [FromBody] UpdateCurriculoDto curriculoDto)
         {
             var curriculo = _context.Curriculos.FirstOrDefault(curriculo => curriculo.CandidatoId == id);
-            var enderecoAtual = curriculo.Endereco;
-            var enderecoNovo = _mapper.Map<>
             if (curriculo == null) return NotFound();
             _mapper.Map(curriculoDto, curriculo);
             _context.SaveChanges();
