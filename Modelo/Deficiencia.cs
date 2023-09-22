@@ -1,11 +1,11 @@
 ﻿namespace RecrutamentoApi.Modelo
 {
-    public enum Deficiencia
+    public class Deficiencia
     {
-        FISICA,
-        AUDITIVA,
-        VISUAL,
-        INTELECTUAL,
-        AUTISTA
+        public bool Fisica { get; set; }
+        public bool Auditiva { get; set; }
+        public bool Visual { get; set; }
+        public bool Intelectual { get; set; }
+        public bool Autista { get; set; }
     }
 }
