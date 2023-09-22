@@ -53,12 +53,14 @@ namespace RecrutamentoApi.Controllers
         }
 
         [HttpGet("login")]
-        public IActionResult Login([FromQuery] string email, [FromQuery] string senha)
+        public ReadCandidatoDto Login([FromQuery] string email, [FromQuery] string senha)
         {
 
             var candidato = _context.Candidatos.FirstOrDefault(candidato => candidato.Email == email && candidato.Senha == senha);
-            if (candidato == null) return NotFound();
-            return Ok();
+            if (candidato == null) {
+                Response.StatusCode = 404;
+            }
+            return _mapper.Map<ReadCandidatoDto>(candidato);
         }
 
         [HttpGet]

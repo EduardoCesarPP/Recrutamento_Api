@@ -46,6 +46,18 @@ namespace RecrutamentoApi.Controllers
             return _mapper.Map<List<ReadEmpresaDto>>(_context.Empresas.Skip(skip).Take(take).ToList());
         }
 
+        [HttpGet("login")]
+        public ReadEmpresaDto Login([FromQuery] string email, [FromQuery] string senha)
+        {
+
+            var empresa = _context.Empresas.FirstOrDefault(empresa => empresa.Email == email && empresa.Senha == senha);
+            if (empresa == null)
+            {
+                Response.StatusCode = 404;
+            }
+            return _mapper.Map<ReadEmpresaDto>(empresa);
+        }
+
         [HttpPut("{id}")]
         public IActionResult AtualizaEmpresa(int id, [FromBody] UpdateEmpresaDto curriculoDto)
         {
