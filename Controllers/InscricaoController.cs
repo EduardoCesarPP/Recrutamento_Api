@@ -63,6 +63,20 @@ namespace RecrutamentoApi.Controllers
             }
         }
 
+        [HttpGet("quantidadeCandidatos/{id}")]
+        public IActionResult QuantidadeCandidatosPorVaga(int id)
+        {
+            try
+            {
+                var vagas = _context.Inscricoes.Where(inscricao => inscricao.VagaId == id).Distinct().ToList();
+                return Ok(vagas.Count);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
+
         [HttpGet("vaga/{id}")]
         public IActionResult RecuperaCandidatosPorVaga(int id, [FromQuery] int skip = 0, [FromQuery] int take = 50,
             [FromQuery] string? textoSituacaoInscricao = null)
