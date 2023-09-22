@@ -66,23 +66,23 @@ namespace RecrutamentoApi.Controllers
             }
         }
 
-        [HttpGet("login")]
-        public IActionResult Login([FromQuery] string email, [FromQuery] string senha)
-        {
-            try
-            {
-                var admnistrador = _context.Admnistradores.FirstOrDefault(admnistrador => admnistrador.Email == email && admnistrador.Senha == senha);
-                if (admnistrador == null)
-                {
-                    Response.StatusCode = 404;
-                }
-                return Ok(_mapper.Map<ReadAdmnistradorDto>(admnistrador));
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex);
-            }
-        }
+        //[HttpGet("login")]
+        //public IActionResult Login([FromQuery] string email, [FromQuery] string senha)
+        //{
+        //    try
+        //    {
+        //        var admnistrador = _context.Admnistradores.FirstOrDefault(admnistrador => admnistrador.Email == email && admnistrador.Senha == senha);
+        //        if (admnistrador == null)
+        //        {
+        //            Response.StatusCode = 404;
+        //        }
+        //        return Ok(_mapper.Map<ReadAdmnistradorDto>(admnistrador));
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return BadRequest(ex);
+        //    }
+        //}
 
         [HttpPut("{id}")]
         public IActionResult Atualiza(int id, [FromBody] UpdateAdmnistradorDto curriculoDto)

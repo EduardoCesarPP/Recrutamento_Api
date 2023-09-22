@@ -72,23 +72,23 @@ namespace RecrutamentoApi.Controllers
             }
         }
 
-        [HttpGet("login")]
-        public IActionResult Login([FromQuery] string email, [FromQuery] string senha)
-        {
-            try
-            {
-                var candidato = _context.Candidatos.FirstOrDefault(candidato => candidato.Email == email && candidato.Senha == senha);
-                if (candidato == null)
-                {
-                    return NotFound();
-                }
-                return Ok(_mapper.Map<ReadCandidatoDto>(candidato));
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex);
-            }
-        }
+        //[HttpGet("login")]
+        //public IActionResult Login([FromQuery] string email, [FromQuery] string senha)
+        //{
+        //    try
+        //    {
+        //        var candidato = _context.Candidatos.FirstOrDefault(candidato => candidato.Email == email && candidato.Senha == senha);
+        //        if (candidato == null)
+        //        {
+        //            return NotFound();
+        //        }
+        //        return Ok(_mapper.Map<ReadCandidatoDto>(candidato));
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return BadRequest(ex);
+        //    }
+        //}
 
         [HttpGet]
         public IActionResult RecuperaCandidatos(
