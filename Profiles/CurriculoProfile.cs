@@ -15,7 +15,14 @@ namespace RecrutamentoApi.Profiles
                 .ForMember(curriculo => curriculo.DeficienciaAutista, opt => opt.MapFrom(curriculoDto => curriculoDto.Deficiencias.Autista))
                 .ForMember(curriculo => curriculo.DeficienciaIntelectual, opt => opt.MapFrom(curriculoDto => curriculoDto.Deficiencias.Intelectual));
 
-            CreateMap<Curriculo, ReadCurriculoDto>()
+            CreateMap<UpdateCurriculoDto, Curriculo>()
+                .ForMember(curriculo => curriculo.DeficienciaFisica, opt => opt.MapFrom(curriculoDto => curriculoDto.Deficiencias.Fisica))
+                .ForMember(curriculo => curriculo.DeficienciaAuditiva, opt => opt.MapFrom(curriculoDto => curriculoDto.Deficiencias.Auditiva))
+                .ForMember(curriculo => curriculo.DeficienciaVisual, opt => opt.MapFrom(curriculoDto => curriculoDto.Deficiencias.Visual))
+                .ForMember(curriculo => curriculo.DeficienciaAutista, opt => opt.MapFrom(curriculoDto => curriculoDto.Deficiencias.Autista))
+                .ForMember(curriculo => curriculo.DeficienciaIntelectual, opt => opt.MapFrom(curriculoDto => curriculoDto.Deficiencias.Intelectual));
+
+                        CreateMap<Curriculo, ReadCurriculoDto>()
                 .ForMember(curriculoDto => curriculoDto.Endereco, opt => opt.MapFrom(curriculo => curriculo.Endereco))
                 .ForPath(
                     curriculoDto => curriculoDto.Deficiencias.Fisica,

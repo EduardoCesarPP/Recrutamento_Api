@@ -23,14 +23,26 @@ namespace RecrutamentoApi.Controllers
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
 
+      
         public IActionResult AdicionaCandidato([FromBody] CreateCandidatoDto candidatoDto)
         {
             Candidato candidato = _mapper.Map<Candidato>(candidatoDto);
             _context.Candidatos.Add(candidato);
             _context.SaveChanges();
             return Ok();
+            return CreatedAtAction(nameof(RecuperaCandidatoPorId), new { id = candidato.Id }, candidato);
         }
 
+        [HttpDelete("{id}")]
+        public IActionResult DeletaCandidato(int id)
+        {
+            var candidato = _context.Candidatos.FirstOrDefault(candidato => candidato.Id == id);
+            if (candidato == null) return NotFound();
+            _context.Remove(candidato);
+            _context.SaveChanges();
+            return NoContent();
+        }
+        
         [HttpGet("{id}")]
         public IActionResult RecuperaCandidatoPorId(int id)
         {
@@ -38,6 +50,15 @@ namespace RecrutamentoApi.Controllers
             if (candidato == null) return NotFound();
             var candidatoDto = _mapper.Map<ReadCandidatoDto>(candidato);
             return Ok(candidatoDto);
+        }
+
+        [HttpGet("login")]
+        public IActionResult Login([FromBody] LoginDto loginDto)
+        {
+
+            var candidato = _context.Candidatos.FirstOrDefault(candidato => candidato.Email == loginDto.Email && candidato.Senha == loginDto.Senha);
+            if (candidato == null) return NotFound();
+            return Ok();
         }
 
         [HttpGet]

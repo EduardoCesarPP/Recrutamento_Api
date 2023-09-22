@@ -32,6 +32,29 @@ namespace RecrutamentoApi.Controllers
             return Ok();
         }
 
+
+        [HttpPut("{id}")]
+        public IActionResult AtualizaCurriculo(int id, [FromBody] UpdateCurriculoDto curriculoDto)
+        {
+            var curriculo = _context.Curriculos.FirstOrDefault(curriculo => curriculo.CandidatoId == id);
+            var enderecoAtual = curriculo.Endereco;
+            var enderecoNovo = _mapper.Map<>
+            if (curriculo == null) return NotFound();
+            _mapper.Map(curriculoDto, curriculo);
+            _context.SaveChanges();
+            return NoContent();
+        }
+
+        [HttpDelete("{id}")]
+        public IActionResult DeletaCurriculo(int id)
+        {
+            var curriculo = _context.Curriculos.FirstOrDefault(curriculo => curriculo.CandidatoId == id);
+            if (curriculo == null) return NotFound();
+            _context.Remove(curriculo);
+            _context.SaveChanges();
+            return NoContent();
+        }
+
         [HttpGet("{id}")]
         public IActionResult RecuperaCurriculoPorId(int id)
         {
