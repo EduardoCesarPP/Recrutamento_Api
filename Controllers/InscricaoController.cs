@@ -23,7 +23,7 @@ namespace RecrutamentoApi.Controllers
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
 
-        public IActionResult AdicionaInscricao([FromBody] CreateInscricaoDto inscricaoDto)
+        public IActionResult Cadastrar([FromBody] CreateInscricaoDto inscricaoDto)
         {
             try
             {
@@ -40,7 +40,7 @@ namespace RecrutamentoApi.Controllers
         }
 
         [HttpGet("candidato/{id}")]
-        public IActionResult RecuperaVagasPorCandidato(int id, [FromQuery] int skip = 0, [FromQuery] int take = 50, [FromQuery] string? textoSituacaoInscricao = null)
+        public IActionResult RecuperarVagasPorCandidato(int id, [FromQuery] int skip = 0, [FromQuery] int take = 50, [FromQuery] string? textoSituacaoInscricao = null)
         {
             try
             {
@@ -64,7 +64,7 @@ namespace RecrutamentoApi.Controllers
         }
 
         [HttpGet("quantidadeCandidatos/{id}")]
-        public IActionResult QuantidadeCandidatosPorVaga(int id)
+        public IActionResult ConsultarQuantidadeCandidatosPorVaga(int id)
         {
             try
             {
@@ -78,7 +78,7 @@ namespace RecrutamentoApi.Controllers
         }
 
         [HttpGet("vaga/{id}")]
-        public IActionResult RecuperaCandidatosPorVaga(int id, [FromQuery] int skip = 0, [FromQuery] int take = 50,
+        public IActionResult ListarCandidatosPorVaga(int id, [FromQuery] int skip = 0, [FromQuery] int take = 50,
             [FromQuery] string? textoSituacaoInscricao = null)
         {
             try

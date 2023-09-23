@@ -23,7 +23,7 @@ namespace RecrutamentoApi.Controllers
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
 
-        public IActionResult AdicionaVaga([FromBody] CreateVagaDto vagaDto)
+        public IActionResult Cadastrar([FromBody] CreateVagaDto vagaDto)
         {
             try
             {
@@ -39,7 +39,7 @@ namespace RecrutamentoApi.Controllers
         }
 
         [HttpGet("{id}")]
-        public IActionResult RecuperaVagaPorId(int id)
+        public IActionResult RecuperarPorId(int id)
         {
             try
             {
@@ -55,11 +55,16 @@ namespace RecrutamentoApi.Controllers
         }
 
         [HttpGet()]
-        public IActionResult ListarVagas([FromQuery] int skip = 0, [FromQuery] int take = 50)
+        public IActionResult Listar([FromQuery] int skip = 0, [FromQuery] int take = 50, [FromQuery] int? idEmpresa = null)
         {
             try
             {
-                return Ok(_mapper.Map<List<ReadVagaDto>>(_context.Vagas.Skip(skip).Take(take).ToList()));
+                var vagas = _context.Vagas.Skip(skip).Take(take).ToList();
+                if (idEmpresa is not null && idEmpresa > 0)
+                {
+                    vagas = vagas.Where(v => v.EmpresaId == idEmpresa).ToList();
+                }
+                return Ok(_mapper.Map<List<ReadVagaDto>>(vagas));
             }
             catch (Exception ex)
             {
@@ -67,21 +72,21 @@ namespace RecrutamentoApi.Controllers
             }
         }
 
-        [HttpGet("empresa/{id}")]
-        public IActionResult ListarVagasPorEmpresa(int id, [FromQuery] int skip = 0, [FromQuery] int take = 50)
-        {
-            try
-            {
-                return Ok(_mapper.Map<List<ReadVagaDto>>(_context.Vagas.Skip(skip).Take(take).Where(v => v.EmpresaId == id).ToList()));
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex);
-            }
-        }
+        //[HttpGet("empresa/{id}")]
+        //public IActionResult ListarPorEmpresa(int id, [FromQuery] int skip = 0, [FromQuery] int take = 50)
+        //{
+        //    try
+        //    {
+        //        return Ok(_mapper.Map<List<ReadVagaDto>>(_context.Vagas.Skip(skip).Take(take).Where(v => v.EmpresaId == id).ToList()));
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return BadRequest(ex);
+        //    }
+        //}
 
         [HttpDelete("{id}")]
-        public IActionResult DeletaVaga(int id)
+        public IActionResult Deletar(int id)
         {
             try
             {

@@ -22,7 +22,7 @@ namespace RecrutamentoApi.Controllers
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
 
-        public IActionResult AdicionaEmpresa([FromBody] CreateEmpresaDto empresaDto)
+        public IActionResult Cadastrar([FromBody] CreateEmpresaDto empresaDto)
         {
             try
             {
@@ -30,7 +30,7 @@ namespace RecrutamentoApi.Controllers
                 _context.Enderecos.Add(empresa.Endereco);
                 _context.Empresas.Add(empresa);
                 _context.SaveChanges();
-                return CreatedAtAction(nameof(RecuperaEmpresaPorId), new { id = empresa.Id }, empresa);
+                return CreatedAtAction(nameof(RecuperarPorId), new { id = empresa.Id }, empresa);
             }
             catch (Exception ex)
             {
@@ -39,7 +39,7 @@ namespace RecrutamentoApi.Controllers
         }
 
         [HttpGet("{id}")]
-        public IActionResult RecuperaEmpresaPorId(int id)
+        public IActionResult RecuperarPorId(int id)
         {
             try
             {
@@ -55,7 +55,7 @@ namespace RecrutamentoApi.Controllers
         }
 
         [HttpGet]
-        public IActionResult RecuperaEmpresas([FromQuery] int skip = 0, [FromQuery] int take = 50)
+        public IActionResult Listar([FromQuery] int skip = 0, [FromQuery] int take = 50)
         {
             try
             {
@@ -68,7 +68,7 @@ namespace RecrutamentoApi.Controllers
         }
 
         [HttpGet("login")]
-        public IActionResult Login([FromQuery] string email, [FromQuery] string senha)
+        public IActionResult Logar([FromQuery] string email, [FromQuery] string senha)
         {
             try
             {
@@ -86,13 +86,13 @@ namespace RecrutamentoApi.Controllers
         }
 
         [HttpPut("{id}")]
-        public IActionResult AtualizaEmpresa(int id, [FromBody] UpdateEmpresaDto curriculoDto)
+        public IActionResult Atualizar(int id, [FromBody] UpdateEmpresaDto empresaDto)
         {
             try
             {
-                var curriculo = _context.Curriculos.FirstOrDefault(curriculo => curriculo.CandidatoId == id);
-                if (curriculo == null) return NotFound();
-                _mapper.Map(curriculoDto, curriculo);
+                var empresa = _context.Empresas.FirstOrDefault(empresa => empresa.Id == id);
+                if (empresa == null) return NotFound();
+                _mapper.Map(empresaDto, empresa);
                 _context.SaveChanges();
                 return NoContent();
             }
@@ -103,7 +103,7 @@ namespace RecrutamentoApi.Controllers
         }
 
         [HttpDelete("{id}")]
-        public IActionResult DeletaCurriculo(int id)
+        public IActionResult Deletar(int id)
         {
             try
             {

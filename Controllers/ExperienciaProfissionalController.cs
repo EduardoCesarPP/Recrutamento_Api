@@ -22,7 +22,7 @@ namespace RecrutamentoApi.Controllers
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
 
-        public IActionResult AdicionaExperienciaProfissional([FromBody] CreateExperienciaProfissionalDto experienciaProfissionalDto)
+        public IActionResult Cadastrar([FromBody] CreateExperienciaProfissionalDto experienciaProfissionalDto)
         {
             try
             {
