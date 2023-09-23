@@ -33,14 +33,14 @@ namespace RecrutamentoApi.Controllers
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
 
-        public IActionResult Adiciona([FromBody] CreateAdmnistradorDto admnistradorDto)
+        public IActionResult Cadastrar([FromBody] CreateAdmnistradorDto admnistradorDto)
         {
             try
             {
                 Admnistrador admnistrador = _mapper.Map<Admnistrador>(admnistradorDto);
                 _context.Admnistradores.Add(admnistrador);
                 _context.SaveChanges();
-                return CreatedAtAction(nameof(RecuperaPorId), new { id = admnistrador.Id }, admnistrador);
+                return CreatedAtAction(nameof(RecuperarPorId), new { id = admnistrador.Id }, admnistrador);
             }
             catch (Exception ex)
             {
@@ -49,7 +49,7 @@ namespace RecrutamentoApi.Controllers
         }
 
         [HttpGet("{id}")]
-        public IActionResult RecuperaPorId(int id)
+        public IActionResult RecuperarPorId(int id)
         {
             try
             {
@@ -65,7 +65,7 @@ namespace RecrutamentoApi.Controllers
         }
 
         [HttpGet]
-        public IActionResult Recupera([FromQuery] int skip = 0, [FromQuery] int take = 50)
+        public IActionResult Listar([FromQuery] int skip = 0, [FromQuery] int take = 50)
         {
             try
             {
@@ -78,7 +78,7 @@ namespace RecrutamentoApi.Controllers
         }
 
         [HttpGet("login")]
-        public IActionResult Login([FromQuery] string email, [FromQuery] string senha)
+        public IActionResult Logar([FromQuery] string email, [FromQuery] string senha)
         {
             try
             {
@@ -96,7 +96,7 @@ namespace RecrutamentoApi.Controllers
         }
 
         [HttpPut("{id}")]
-        public IActionResult Atualiza(int id, [FromBody] UpdateAdmnistradorDto curriculoDto)
+        public IActionResult Atualizar(int id, [FromBody] UpdateAdmnistradorDto curriculoDto)
         {
             try
             {
@@ -113,7 +113,7 @@ namespace RecrutamentoApi.Controllers
         }
 
         [HttpDelete("{id}")]
-        public IActionResult Deleta(int id)
+        public IActionResult Deletar(int id)
         {
             try
             {

@@ -22,14 +22,14 @@ namespace RecrutamentoApi.Controllers
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
 
-        public IActionResult AdicionaIdioma([FromBody] CreateIdiomaDto idiomaDto)
+        public IActionResult Cadastrar([FromBody] CreateIdiomaDto idiomaDto)
         {
             try
             {
                 Idioma idioma = _mapper.Map<Idioma>(idiomaDto);
                 _context.Idiomas.Add(idioma);
                 _context.SaveChanges();
-                return CreatedAtAction(nameof(RecuperaIdiomaPorId), new { id = idioma.Id }, idioma);
+                return CreatedAtAction(nameof(RecuperarPorId), new { id = idioma.Id }, idioma);
             }
             catch (Exception ex)
             {
@@ -38,7 +38,7 @@ namespace RecrutamentoApi.Controllers
         }
 
         [HttpGet("{id}")]
-        public IActionResult RecuperaIdiomaPorId(int id)
+        public IActionResult RecuperarPorId(int id)
         {
             try
             {
@@ -54,7 +54,7 @@ namespace RecrutamentoApi.Controllers
         }
 
         [HttpGet]
-        public IActionResult RecuperaIdiomas([FromQuery] int skip = 0, [FromQuery] int take = 50)
+        public IActionResult Listar([FromQuery] int skip = 0, [FromQuery] int take = 50)
         {
             try
             {

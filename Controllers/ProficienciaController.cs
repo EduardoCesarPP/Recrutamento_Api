@@ -23,7 +23,7 @@ namespace RecrutamentoApi.Controllers
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
 
-        public IActionResult AdicionaProficiencia([FromBody] CreateProficienciaDto proficienciaDto)
+        public IActionResult Cadastrar([FromBody] CreateProficienciaDto proficienciaDto)
         {
             try
             {

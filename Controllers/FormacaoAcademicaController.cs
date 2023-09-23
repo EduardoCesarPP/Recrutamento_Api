@@ -22,7 +22,7 @@ namespace RecrutamentoApi.Controllers
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
 
-        public IActionResult AdicionaFormacaoAcademica([FromBody] CreateFormacaoAcademicaDto formacaoAcademicaDto)
+        public IActionResult Cadastrar([FromBody] CreateFormacaoAcademicaDto formacaoAcademicaDto)
         {
             try
             {

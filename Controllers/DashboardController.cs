@@ -28,7 +28,7 @@ namespace RecrutamentoApi.Controllers
         /// <response code="200">Caso o registro seja realizado com sucesso</response> 
         /// <response code="400">Caso ocorra algum erro.</response> 
         [HttpGet("quantidadeInscricoes")]
-        public IActionResult QuantidadeInscricoes(
+        public IActionResult ConsultarQuantidadeInscricoes(
             [FromQuery] int? idEmpresa = null,
             [FromQuery] int? idCandidato = null,
             [FromQuery] List<string> listaStatusInscricao = null)
@@ -66,7 +66,7 @@ namespace RecrutamentoApi.Controllers
         /// <response code="200">Caso o registro seja realizado com sucesso</response> 
         /// <response code="400">Caso ocorra algum erro.</response> 
         [HttpGet("quantidadeCandidatos")]
-        public IActionResult QuantidadeCandidatos(
+        public IActionResult ConsultarQuantidadeCandidatos(
             [FromQuery] List<string> listaStatusInscricao = null)
         {
             try
@@ -92,7 +92,7 @@ namespace RecrutamentoApi.Controllers
         /// <response code="200">Caso o registro seja realizado com sucesso</response> 
         /// <response code="400">Caso ocorra algum erro.</response> 
         [HttpGet("quantidadeEmpresas")]
-        public IActionResult QuantidadeEmpresas()
+        public IActionResult ConsultarQuantidadeEmpresas()
         {
             try
             {

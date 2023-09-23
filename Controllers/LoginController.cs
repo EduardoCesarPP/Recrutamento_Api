@@ -18,7 +18,7 @@ namespace RecrutamentoApi.Controllers
         }
 
         [HttpGet("login")]
-        public IActionResult Login([FromQuery] string email, [FromQuery] string senha)
+        public IActionResult Logar([FromQuery] string email, [FromQuery] string senha)
         {
             try
             {

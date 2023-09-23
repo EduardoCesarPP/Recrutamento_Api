@@ -22,7 +22,7 @@ namespace RecrutamentoApi.Controllers
 
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
-        public IActionResult AdicionaCurriculo([FromBody] CreateCurriculoDto curriculoDto)
+        public IActionResult Cadastrar([FromBody] CreateCurriculoDto curriculoDto)
         {
             try
             {
@@ -30,7 +30,7 @@ namespace RecrutamentoApi.Controllers
                 _context.Enderecos.Add(curriculo.Endereco);
                 _context.Curriculos.Add(curriculo);
                 _context.SaveChanges();
-                return CreatedAtAction(nameof(RecuperaCurriculoPorId), new { id = curriculo.CandidatoId }, curriculo);
+                return CreatedAtAction(nameof(RecuperarPorId), new { id = curriculo.CandidatoId }, curriculo);
             }
             catch (Exception ex)
             {
@@ -40,7 +40,7 @@ namespace RecrutamentoApi.Controllers
 
 
         [HttpPut("{id}")]
-        public IActionResult AtualizaCurriculo(int id, [FromBody] UpdateCurriculoDto curriculoDto)
+        public IActionResult Atualizar(int id, [FromBody] UpdateCurriculoDto curriculoDto)
         {
             try
             {
@@ -57,7 +57,7 @@ namespace RecrutamentoApi.Controllers
         }
 
         [HttpDelete("{id}")]
-        public IActionResult DeletaCurriculo(int id)
+        public IActionResult Deletar(int id)
         {
             try
             {
@@ -74,7 +74,7 @@ namespace RecrutamentoApi.Controllers
         }
 
         [HttpGet("{id}")]
-        public IActionResult RecuperaCurriculoPorId(int id)
+        public IActionResult RecuperarPorId(int id)
         {
             try
             {
@@ -90,7 +90,7 @@ namespace RecrutamentoApi.Controllers
         }
 
         [HttpGet]
-        public IActionResult RecuperaCurriculos(
+        public IActionResult Listar(
             [FromQuery] int skip = 0,
             [FromQuery] int take = 50,
             [FromQuery] List<string>? nomesIdiomas = null,

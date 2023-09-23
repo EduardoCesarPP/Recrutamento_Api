@@ -22,7 +22,7 @@ namespace RecrutamentoApi.Controllers
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
 
-        public IActionResult AdicionaCertificacao([FromBody] CreateCertificacaoDto certificacaoDto)
+        public IActionResult Cadastrar([FromBody] CreateCertificacaoDto certificacaoDto)
         {
             try
             {

@@ -32,14 +32,31 @@ namespace RecrutamentoApi.Controllers
         /// <response code="400">Caso ocorra algum erro.</response> 
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
-        public IActionResult AdicionaCandidato([FromBody] CreateCandidatoDto candidatoDto)
+        public IActionResult Cadastrar([FromBody] CreateCandidatoDto candidatoDto)
         {
             try
             {
                 Candidato candidato = _mapper.Map<Candidato>(candidatoDto);
                 _context.Candidatos.Add(candidato);
                 _context.SaveChanges();
-                return CreatedAtAction(nameof(RecuperaCandidatoPorId), new { id = candidato.Id }, candidato);
+                return CreatedAtAction(nameof(RecuperarPorId), new { id = candidato.Id }, candidato);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
+
+        [HttpPut("{id}")]
+        public IActionResult Atualizar(int id, [FromBody] UpdateCandidatoDto candidatoDto)
+        {
+            try
+            {
+                var candidato = _context.Candidatos.FirstOrDefault(candidato => candidato.Id == id);
+                if (candidato == null) return NotFound();
+                _mapper.Map(candidatoDto, candidato);
+                _context.SaveChanges();
+                return NoContent();
             }
             catch (Exception ex)
             {
@@ -48,7 +65,7 @@ namespace RecrutamentoApi.Controllers
         }
 
         [HttpDelete("{id}")]
-        public IActionResult DeletaCandidato(int id)
+        public IActionResult Deletar(int id)
         {
             try
             {
@@ -65,7 +82,7 @@ namespace RecrutamentoApi.Controllers
         }
 
         [HttpGet("{id}")]
-        public IActionResult RecuperaCandidatoPorId(int id)
+        public IActionResult RecuperarPorId(int id)
         {
             try
             {
@@ -81,7 +98,7 @@ namespace RecrutamentoApi.Controllers
         }
 
         [HttpGet("login")]
-        public IActionResult Login([FromQuery] string email, [FromQuery] string senha)
+        public IActionResult Logar([FromQuery] string email, [FromQuery] string senha)
         {
             try
             {
@@ -99,7 +116,7 @@ namespace RecrutamentoApi.Controllers
         }
 
         [HttpGet]
-        public IActionResult RecuperaCandidatos(
+        public IActionResult Listar(
             [FromQuery] int skip = 0,
             [FromQuery] int take = 50,
             [FromQuery] List<string>? nomesIdiomas = null,
