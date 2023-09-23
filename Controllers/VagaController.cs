@@ -79,5 +79,22 @@ namespace RecrutamentoApi.Controllers
                 return BadRequest(ex);
             }
         }
+
+        [HttpDelete("{id}")]
+        public IActionResult DeletaVaga(int id)
+        {
+            try
+            {
+                var vaga = _context.Vagas.FirstOrDefault(vaga => vaga.Id == id);
+                if (vaga == null) return NotFound();
+                _context.Remove(vaga);
+                _context.SaveChanges();
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
     }
 }
