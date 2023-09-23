@@ -11,8 +11,8 @@ namespace RecrutamentoApi.Dados
         public void Configure(EntityTypeBuilder<Candidato> builder)
         {
             builder
-    .Property(c => c.Nome)
-    .IsRequired();
+                .Property(c => c.Nome)
+                .IsRequired();
 
             builder
                 .Property(c => c.Sobrenome)
@@ -32,12 +32,8 @@ namespace RecrutamentoApi.Dados
                 .HasForeignKey<Curriculo>(e => e.CandidatoId)
                 .IsRequired(false);
 
-
             builder
                .HasAlternateKey(c => new { c.Nome, c.Sobrenome });
-
-
-
         }
     }
 }
