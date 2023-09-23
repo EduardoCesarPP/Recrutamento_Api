@@ -16,6 +16,27 @@ namespace RecrutamentoApi.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
+                name: "Admnistradores",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Nome = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Sobrenome = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Email = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Senha = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Admnistradores", x => x.Id);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
                 name: "Candidatos",
                 columns: table => new
                 {
@@ -84,8 +105,11 @@ namespace RecrutamentoApi.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     TextoRaca = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    TextosDeficiencias = table.Column<string>(type: "longtext", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    DeficienciaFisica = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    DeficienciaAuditiva = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    DeficienciaVisual = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    DeficienciaIntelectual = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    DeficienciaAutista = table.Column<bool>(type: "tinyint(1)", nullable: false),
                     EnderecoId = table.Column<int>(type: "int", nullable: false),
                     LinkedIn = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4")
@@ -117,6 +141,8 @@ namespace RecrutamentoApi.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     RazaoSocial = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
+                    NomeFantasia = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
                     EnderecoId = table.Column<int>(type: "int", nullable: false),
                     Email = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
@@ -145,7 +171,8 @@ namespace RecrutamentoApi.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    CurriculoId = table.Column<int>(type: "int", nullable: false),
+                    CurriculoCandidatoId = table.Column<int>(type: "int", nullable: false),
+                    CandidatoId = table.Column<int>(type: "int", nullable: false),
                     Titulo = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Organizacao = table.Column<string>(type: "longtext", nullable: false)
@@ -156,8 +183,8 @@ namespace RecrutamentoApi.Migrations
                 {
                     table.PrimaryKey("PK_Certificacoes", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Certificacoes_Curriculos_CurriculoId",
-                        column: x => x.CurriculoId,
+                        name: "FK_Certificacoes_Curriculos_CurriculoCandidatoId",
+                        column: x => x.CurriculoCandidatoId,
                         principalTable: "Curriculos",
                         principalColumn: "CandidatoId",
                         onDelete: ReferentialAction.Cascade);
@@ -170,7 +197,8 @@ namespace RecrutamentoApi.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    CurriculoId = table.Column<int>(type: "int", nullable: false),
+                    CurriculoCandidatoId = table.Column<int>(type: "int", nullable: false),
+                    CandidatoId = table.Column<int>(type: "int", nullable: false),
                     Titulo = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     TipoEmprego = table.Column<string>(type: "longtext", nullable: false)
@@ -184,8 +212,8 @@ namespace RecrutamentoApi.Migrations
                 {
                     table.PrimaryKey("PK_ExperienciasProfissionais", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ExperienciasProfissionais_Curriculos_CurriculoId",
-                        column: x => x.CurriculoId,
+                        name: "FK_ExperienciasProfissionais_Curriculos_CurriculoCandidatoId",
+                        column: x => x.CurriculoCandidatoId,
                         principalTable: "Curriculos",
                         principalColumn: "CandidatoId",
                         onDelete: ReferentialAction.Cascade);
@@ -198,7 +226,8 @@ namespace RecrutamentoApi.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    CurriculoId = table.Column<int>(type: "int", nullable: false),
+                    CurriculoCandidatoId = table.Column<int>(type: "int", nullable: false),
+                    CandidatoId = table.Column<int>(type: "int", nullable: false),
                     TextoNivelFormacao = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     NivelFormacao = table.Column<int>(type: "int", nullable: false),
@@ -211,8 +240,8 @@ namespace RecrutamentoApi.Migrations
                 {
                     table.PrimaryKey("PK_FormacoesAcademicas", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_FormacoesAcademicas_Curriculos_CurriculoId",
-                        column: x => x.CurriculoId,
+                        name: "FK_FormacoesAcademicas_Curriculos_CurriculoCandidatoId",
+                        column: x => x.CurriculoCandidatoId,
                         principalTable: "Curriculos",
                         principalColumn: "CandidatoId",
                         onDelete: ReferentialAction.Cascade);
@@ -314,9 +343,9 @@ namespace RecrutamentoApi.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Certificacoes_CurriculoId",
+                name: "IX_Certificacoes_CurriculoCandidatoId",
                 table: "Certificacoes",
-                column: "CurriculoId");
+                column: "CurriculoCandidatoId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Curriculos_EnderecoId",
@@ -329,14 +358,14 @@ namespace RecrutamentoApi.Migrations
                 column: "EnderecoId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ExperienciasProfissionais_CurriculoId",
+                name: "IX_ExperienciasProfissionais_CurriculoCandidatoId",
                 table: "ExperienciasProfissionais",
-                column: "CurriculoId");
+                column: "CurriculoCandidatoId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_FormacoesAcademicas_CurriculoId",
+                name: "IX_FormacoesAcademicas_CurriculoCandidatoId",
                 table: "FormacoesAcademicas",
-                column: "CurriculoId");
+                column: "CurriculoCandidatoId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Inscricoes_VagaId",
@@ -357,6 +386,9 @@ namespace RecrutamentoApi.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "Admnistradores");
+
             migrationBuilder.DropTable(
                 name: "Certificacoes");
 

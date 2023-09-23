@@ -20,10 +20,18 @@ namespace RecrutamentoApi.Controllers
             _mapper = mapper;
         }
 
+        /// <summary>
+        /// Realiza o cadastro de um novo candidato.
+        /// </summary>
+        /// <param name="Nome">Nome do candidato</param>
+        /// <param name="Sobrenome">Sobrenome do candidato</param>
+        /// <param name="Email">E-mail do candidato</param>
+        /// <param name="Senha">Senha do candidato</param>
+        /// <returns>IActionResult</returns>
+        /// <response code="201">Caso o registro seja realizado com sucesso</response> 
+        /// <response code="400">Caso ocorra algum erro.</response> 
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
-
-
         public IActionResult AdicionaCandidato([FromBody] CreateCandidatoDto candidatoDto)
         {
             try

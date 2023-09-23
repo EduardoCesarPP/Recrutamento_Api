@@ -19,6 +19,17 @@ namespace RecrutamentoApi.Controllers
             _mapper = mapper;
         }
 
+        /// <summary>
+        /// Realiza o cadastro de um novo admnistrador.
+        /// </summary>
+        /// <param name="Nome">Nome do admnistrador</param>
+        /// <param name="Sobrenome">Sobrenome do admnistrador</param>
+        /// <param name="Email">E-mail do admnistrador</param>
+        /// <param name="Senha">Senha do admnistrador</param>
+        /// <returns>IActionResult</returns>
+        /// <response code="201">Caso o registro seja realizado com sucesso</response> 
+        /// <response code="400">Caso ocorra algum erro.</response> 
+        /// 
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
 

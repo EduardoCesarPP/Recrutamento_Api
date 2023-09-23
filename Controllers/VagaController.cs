@@ -54,8 +54,21 @@ namespace RecrutamentoApi.Controllers
             }
         }
 
+        [HttpGet()]
+        public IActionResult ListarVagas([FromQuery] int skip = 0, [FromQuery] int take = 50)
+        {
+            try
+            {
+                return Ok(_mapper.Map<List<ReadVagaDto>>(_context.Vagas.Skip(skip).Take(take).ToList()));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
+
         [HttpGet("empresa/{id}")]
-        public IActionResult RecuperaVagasPorEmpresa(int id, [FromQuery] int skip = 0, [FromQuery] int take = 50)
+        public IActionResult ListarVagasPorEmpresa(int id, [FromQuery] int skip = 0, [FromQuery] int take = 50)
         {
             try
             {

@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
 using RecrutamentoApi.Dados;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +11,18 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Title = "RecrutamentoAPI",
+        Version = "v1",
+        Description = "Este é um Microsserviço que visa orquestrar o gerenciamento de uma plataforma de recrutamentos. Desde o cadastro de candidatos até o fim do processo de inscrição em uma vaga."
+    });
+    var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+    c.IncludeXmlComments(xmlPath);
+});
 
 // Conexão com o Banco MySql
 // UseLazyLoadingProxies = Definição para realizar consultas adicionais (Ex.: Endereço do Cinema)

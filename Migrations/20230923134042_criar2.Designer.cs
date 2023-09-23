@@ -11,8 +11,8 @@ using RecrutamentoApi.Dados;
 namespace RecrutamentoApi.Migrations
 {
     [DbContext(typeof(RecrutamentoContext))]
-    [Migration("20230922001649_criar3")]
-    partial class criar3
+    [Migration("20230923134042_criar2")]
+    partial class criar2
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,6 +24,33 @@ namespace RecrutamentoApi.Migrations
                 .HasAnnotation("Proxies:CheckEquality", false)
                 .HasAnnotation("Proxies:LazyLoading", true)
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
+
+            modelBuilder.Entity("RecrutamentoApi.Modelo.Admnistrador", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Nome")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Senha")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Sobrenome")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Admnistradores");
+                });
 
             modelBuilder.Entity("RecrutamentoApi.Modelo.Candidato", b =>
                 {
@@ -60,7 +87,7 @@ namespace RecrutamentoApi.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int>("CurriculoId")
+                    b.Property<int>("CandidatoId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("DataEmissao")
@@ -76,7 +103,7 @@ namespace RecrutamentoApi.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CurriculoId");
+                    b.HasIndex("CandidatoId");
 
                     b.ToTable("Certificacoes");
                 });
@@ -148,6 +175,10 @@ namespace RecrutamentoApi.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
+                    b.Property<string>("NomeFantasia")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
                     b.Property<string>("RazaoSocial")
                         .IsRequired()
                         .HasColumnType("longtext");
@@ -203,7 +234,7 @@ namespace RecrutamentoApi.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int>("CurriculoId")
+                    b.Property<int>("CandidatoId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("DataFim")
@@ -226,7 +257,7 @@ namespace RecrutamentoApi.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CurriculoId");
+                    b.HasIndex("CandidatoId");
 
                     b.ToTable("ExperienciasProfissionais");
                 });
@@ -237,7 +268,7 @@ namespace RecrutamentoApi.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int>("CurriculoId")
+                    b.Property<int>("CandidatoId")
                         .HasColumnType("int");
 
                     b.Property<string>("Curso")
@@ -259,7 +290,7 @@ namespace RecrutamentoApi.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CurriculoId");
+                    b.HasIndex("CandidatoId");
 
                     b.ToTable("FormacoesAcademicas");
                 });
@@ -381,7 +412,7 @@ namespace RecrutamentoApi.Migrations
                 {
                     b.HasOne("RecrutamentoApi.Modelo.Curriculo", "Curriculo")
                         .WithMany("Certificacoes")
-                        .HasForeignKey("CurriculoId")
+                        .HasForeignKey("CandidatoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -420,7 +451,7 @@ namespace RecrutamentoApi.Migrations
                 {
                     b.HasOne("RecrutamentoApi.Modelo.Curriculo", "Curriculo")
                         .WithMany("ExperienciasProfissionais")
-                        .HasForeignKey("CurriculoId")
+                        .HasForeignKey("CandidatoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -431,7 +462,7 @@ namespace RecrutamentoApi.Migrations
                 {
                     b.HasOne("RecrutamentoApi.Modelo.Curriculo", "Curriculo")
                         .WithMany("FormacoesAcademicas")
-                        .HasForeignKey("CurriculoId")
+                        .HasForeignKey("CandidatoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

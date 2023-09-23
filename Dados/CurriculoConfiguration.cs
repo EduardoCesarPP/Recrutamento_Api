@@ -38,15 +38,18 @@ namespace RecrutamentoApi.Dados
 
             builder
                 .HasMany(c => c.FormacoesAcademicas)
-                .WithOne(f => f.Curriculo);
+                .WithOne(f => f.Curriculo)
+                .HasForeignKey(f => f.CandidatoId);
 
             builder
                 .HasMany(c => c.Certificacoes)
-                .WithOne(c => c.Curriculo);
+                .WithOne(c => c.Curriculo)
+                .HasForeignKey(c => c.CandidatoId);
 
             builder
                 .HasMany(c => c.ExperienciasProfissionais)
-                .WithOne(e => e.Curriculo);
+                .WithOne(e => e.Curriculo)
+                .HasForeignKey(e => e.CandidatoId);
 
             //builder
             //    .HasOne(c => c.Candidato);
@@ -68,7 +71,7 @@ namespace RecrutamentoApi.Dados
             //            .ToList())
             //);
 
-            
+
 
             builder.Ignore(c => c.Genero);
             builder.Ignore(c => c.Raca);
