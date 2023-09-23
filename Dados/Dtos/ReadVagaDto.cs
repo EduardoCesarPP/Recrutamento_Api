@@ -4,7 +4,6 @@ namespace RecrutamentoApi.Dados.Dtos
     public class ReadVagaDto
     {
         public virtual ReadEmpresaDto Empresa { get; set; }
-        public string id { get; set; }
         public string Nome { get; set; }
         public string TextoTipoVaga { get; private set; }
         public string TipoVaga { get; set; }

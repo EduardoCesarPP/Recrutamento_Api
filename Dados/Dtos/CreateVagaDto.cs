@@ -4,7 +4,6 @@ namespace RecrutamentoApi.Dados.Dtos
     public class CreateVagaDto
     {
         public int EmpresaId { get; set; }
-        public string id { get; set; }
         public string Nome { get; set; }
         public string TipoVaga { get; set; }
         [JsonConverter(typeof(DateOnlyJsonConverter))]
