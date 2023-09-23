@@ -6,12 +6,12 @@ namespace RecrutamentoApi.Extensions
     {
         private static Dictionary<string, Genero> mapa = new Dictionary<string, Genero>
         {
-            { "MASCULINO", Genero.MASCULINO },
-            { "FEMININO", Genero.FEMININO },
-            { "TRANSGENERO", Genero.TRANSGENERO },
-            { "NAO_BINARIO", Genero.NAO_BINARIO },
-            { "OUTRO", Genero.OUTRO },
-            { "NAO_INFORMAR", Genero.NAO_INFORMAR }
+            { "Masculino", Genero.MASCULINO },
+            { "Feminino", Genero.FEMININO },
+            { "Transgênero", Genero.TRANSGENERO },
+            { "Não Binário", Genero.NAO_BINARIO },
+            { "Outro", Genero.OUTRO },
+            { "Prefiro não informar", Genero.NAO_INFORMAR }
         };
 
         public static string ParaString(this Genero valor)

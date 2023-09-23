@@ -6,12 +6,12 @@ namespace RecrutamentoApi.Extensions
     {
         private static Dictionary<string, NivelFormacao> mapa = new Dictionary<string, NivelFormacao>
         {
-            { "FUNDAMENTAL", NivelFormacao.FUNDAMENTAL },
-            { "MEDIO", NivelFormacao.MEDIO },
-            { "INTELECTGRADUACAOUAL", NivelFormacao.GRADUACAO },
-            { "POS_GRADUACAO", NivelFormacao.POS_GRADUACAO },
-            { "MESTRADO", NivelFormacao.MESTRADO },
-            { "DOUTORADO", NivelFormacao.DOUTORADO },
+            { "Fundamental", NivelFormacao.FUNDAMENTAL },
+            { "Ensino Médio", NivelFormacao.MEDIO },
+            { "Graduação", NivelFormacao.GRADUACAO },
+            { "Pós Graduação", NivelFormacao.POS_GRADUACAO },
+            { "Mestrado", NivelFormacao.MESTRADO },
+            { "Doutorado", NivelFormacao.DOUTORADO },
             { "PHD", NivelFormacao.PHD }
         };
 

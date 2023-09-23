@@ -6,9 +6,9 @@ namespace RecrutamentoApi.Extensions
     {
         private static Dictionary<string, Modalidade> mapa = new Dictionary<string, Modalidade>
         {
-            { "HOME_OFFICE", Modalidade.HOME_OFFICE },
-            { "HIBRIDO", Modalidade.HIBRIDO },
-            { "PRESENCIAL", Modalidade.PRESENCIAL }
+            { "Home Office", Modalidade.HOME_OFFICE },
+            { "Híbrido", Modalidade.HIBRIDO },
+            { "Presencial", Modalidade.PRESENCIAL }
         };
 
         public static string ParaString(this Modalidade valor)

@@ -6,13 +6,13 @@ namespace RecrutamentoApi.Extensions
     {
         private static Dictionary<string, Raca> mapa = new Dictionary<string, Raca>
         {
-            { "BRANCO", Raca.BRANCO },
-            { "PRETO", Raca.PRETO },
-            { "ARABE", Raca.ARABE },
-            { "INDIGENA", Raca.INDIGENA },
-            { "PARDO", Raca.PARDO },
-            { "NAO_INFORMAR", Raca.NAO_INFORMAR },
-            { "ASIATICO", Raca.ASIATICO }
+            { "Branca(o)", Raca.BRANCO },
+            { "Preta(o) ou Negra(o)", Raca.PRETO },
+            { "Árabe ou Oriente Médio", Raca.ARABE },
+            { "Indígena ou Nativa(o)", Raca.INDIGENA },
+            { "Parda(o)", Raca.PARDO },
+            { "Prefiro não informar", Raca.NAO_INFORMAR },
+            { "Amarela(o) ou Asiática(o)", Raca.ASIATICO }
         };
 
         public static string ParaString(this Raca valor)

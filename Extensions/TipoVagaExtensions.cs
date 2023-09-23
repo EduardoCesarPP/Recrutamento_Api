@@ -8,8 +8,8 @@ namespace RecrutamentoApi.Extensions
         {
             { "CLT", TipoVaga.CLT },
             { "PJ", TipoVaga.PJ },
-            { "ESTAGIO", TipoVaga.ESTAGIO },
-            { "APRENDIZ", TipoVaga.APRENDIZ }
+            { "Estágio", TipoVaga.ESTAGIO },
+            { "Aprendiz", TipoVaga.APRENDIZ }
         };
 
         public static string ParaString(this TipoVaga valor)

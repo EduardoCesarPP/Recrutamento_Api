@@ -6,11 +6,11 @@ namespace RecrutamentoApi.Extensions
     {
         private static Dictionary<string, StatusInscricao> mapa = new Dictionary<string, StatusInscricao>
         {
-            { "ENVIO_CURRICULO", StatusInscricao.ENVIO_CURRICULO },
-            { "TESTE_DISSERTACAO", StatusInscricao.TESTE_DISSERTACAO },
-            { "ANALISE_CURRICULO", StatusInscricao.ANALISE_CURRICULO },
-            { "ENTREVISTA_RH", StatusInscricao.ENTREVISTA_RH },
-            { "ENTREVISTA_GESTOR", StatusInscricao.ENTREVISTA_GESTOR },
+            { "ENVIO CURRICULO", StatusInscricao.ENVIO_CURRICULO },
+            { "TESTE DISSERTACAO", StatusInscricao.TESTE_DISSERTACAO },
+            { "ANALISE CURRICULO", StatusInscricao.ANALISE_CURRICULO },
+            { "ENTREVISTA RH", StatusInscricao.ENTREVISTA_RH },
+            { "ENTREVISTA GESTOR", StatusInscricao.ENTREVISTA_GESTOR },
             { "FINALIZADA", StatusInscricao.FINALIZADA }
         };
 
