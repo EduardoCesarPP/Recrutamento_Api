@@ -297,7 +297,7 @@ namespace RecrutamentoApi.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Responsabilidades = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    Qualificações = table.Column<string>(type: "longtext", nullable: false)
+                    Qualificacoes = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     TextoModalidade = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),

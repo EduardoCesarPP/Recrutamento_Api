@@ -376,7 +376,7 @@ namespace RecrutamentoApi.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<string>("Qualificações")
+                    b.Property<string>("Qualificacoes")
                         .IsRequired()
                         .HasColumnType("longtext");
 

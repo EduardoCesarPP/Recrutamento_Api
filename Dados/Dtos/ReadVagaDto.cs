@@ -14,7 +14,7 @@ namespace RecrutamentoApi.Dados.Dtos
         public decimal Salario { get; set; }
         public string Descricao { get; set; }
         public string Responsabilidades { get; set; }
-        public string Qualificações { get; set; }
+        public string Qualificacoes { get; set; }
         public string TextoModalidade { get; private set; }
         public string Modalidade { get; set; }
     }
