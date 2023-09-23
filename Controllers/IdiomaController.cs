@@ -37,6 +37,28 @@ namespace RecrutamentoApi.Controllers
             }
         }
 
+        [HttpPost("lote")]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+
+        public IActionResult CadastrarLote([FromBody] List<CreateIdiomaDto> idiomasDto)
+        {
+            try
+            {
+                foreach (var idiomaDto in idiomasDto)
+                {
+                    Idioma idioma = _mapper.Map<Idioma>(idiomaDto);
+                    _context.Idiomas.Add(idioma);
+                    _context.SaveChanges();
+                }          
+                                
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
+
         [HttpGet("{id}")]
         public IActionResult RecuperarPorId(int id)
         {
