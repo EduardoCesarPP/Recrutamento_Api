@@ -6,7 +6,7 @@ namespace RecrutamentoApi.Modelo
     {
         public int Id { get; set; }
         public virtual Curriculo Curriculo { get; set; }
-        public int CurriculoId { get; set; }
+        public int CandidatoId { get; set; }
         public string TextoNivelFormacao { get; private set; }
         public virtual NivelFormacao NivelFormacao
         {

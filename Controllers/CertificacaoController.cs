@@ -29,7 +29,7 @@ namespace RecrutamentoApi.Controllers
                 Certificacao certificacao = _mapper.Map<Certificacao>(certificacaoDto);
                 _context.Certificacoes.Add(certificacao);
                 _context.SaveChanges();
-                return CreatedAtAction(nameof(Listar), new { id = certificacao.CurriculoId }, certificacao);
+                return CreatedAtAction(nameof(Listar), new { id = certificacao.CandidatoId }, certificacao);
             }
             catch (Exception ex)
             {

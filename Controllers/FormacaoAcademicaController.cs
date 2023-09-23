@@ -29,7 +29,7 @@ namespace RecrutamentoApi.Controllers
                 FormacaoAcademica formacaoAcademica = _mapper.Map<FormacaoAcademica>(formacaoAcademicaDto);
                 _context.FormacoesAcademicas.Add(formacaoAcademica);
                 _context.SaveChanges();
-                return CreatedAtAction(nameof(Listar), new { id = formacaoAcademica.CurriculoId }, formacaoAcademica);
+                return CreatedAtAction(nameof(Listar), new { id = formacaoAcademica.CandidatoId }, formacaoAcademica);
             }
             catch (Exception ex)
             {

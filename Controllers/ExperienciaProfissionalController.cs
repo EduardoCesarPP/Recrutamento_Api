@@ -29,7 +29,7 @@ namespace RecrutamentoApi.Controllers
                 ExperienciaProfissional experienciaProfissional = _mapper.Map<ExperienciaProfissional>(experienciaProfissionalDto);
                 _context.ExperienciasProfissionais.Add(experienciaProfissional);
                 _context.SaveChanges();
-                return CreatedAtAction(nameof(Listar), new { id = experienciaProfissional.CurriculoId }, experienciaProfissional);
+                return CreatedAtAction(nameof(Listar), new { id = experienciaProfissional.CandidatoId }, experienciaProfissional);
             }
             catch (Exception ex)
             {
