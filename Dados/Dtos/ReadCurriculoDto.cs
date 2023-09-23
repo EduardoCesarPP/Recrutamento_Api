@@ -1,11 +1,13 @@
 ﻿
 using RecrutamentoApi.Modelo;
 
+using Newtonsoft.Json;
 namespace RecrutamentoApi.Dados.Dtos
 {
     public class ReadCurriculoDto
     {
         public ReadCandidatoDto Candidato { get; set; }
+        [JsonConverter(typeof(DateOnlyJsonConverter))]
         public DateOnly DataNascimento { get; set; }
         public string Genero { get; private set; }
         public string Raca { get; private set; }

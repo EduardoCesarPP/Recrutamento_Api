@@ -1,4 +1,5 @@
-﻿namespace RecrutamentoApi.Dados.Dtos
+﻿using Newtonsoft.Json;
+namespace RecrutamentoApi.Dados.Dtos
 {
     public class ReadVagaDto
     {
@@ -6,6 +7,7 @@
         public string Nome { get; set; }
         public string TextoTipoVaga { get; private set; }
         public string TipoVaga { get; set; }
+        [JsonConverter(typeof(DateOnlyJsonConverter))]
         public DateOnly DataPublicacao { get; set; }
         public string Cidade { get; set; }
         public string Estado { get; set; }
