@@ -38,6 +38,22 @@ namespace RecrutamentoApi.Controllers
             }
         }
 
+        [HttpPut("{id}")]
+        public IActionResult Atualizar(int id, [FromBody] UpdateVagaDto vagaDto)
+        {
+            try
+            {
+                var vaga = _context.Vagas.FirstOrDefault(vaga => vaga.Id == id);
+                if (vaga == null) return NotFound();
+                _mapper.Map(vagaDto, vaga);
+                _context.SaveChanges();
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
         [HttpGet("{id}")]
         public IActionResult RecuperarPorId(int id)
         {
