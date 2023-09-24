@@ -10,6 +10,8 @@ namespace RecrutamentoApi.Profiles
         {
             CreateMap<CreateEmpresaDto, Empresa>();
 
+            CreateMap<UpdateEmpresaDto, Empresa>();
+
             CreateMap<Empresa, ReadEmpresaDto>()
                 .ForMember(candidatoDto => candidatoDto.Endereco, opt => opt.MapFrom(candidato => candidato.Endereco));
 
