@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace RecrutamentoApi.Dados.Dtos
 {
-    public class UpdateCandidatoDto
+    public class CreateCandidatoDto
     {
         public string Nome { get; set; }
         public string Sobrenome { get; set; }

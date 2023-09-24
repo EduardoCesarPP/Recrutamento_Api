@@ -72,18 +72,18 @@ namespace RecrutamentoApi.Controllers
             }
         }
 
-        //[HttpGet("empresa/{id}")]
-        //public IActionResult ListarPorEmpresa(int id, [FromQuery] int skip = 0, [FromQuery] int take = 50)
-        //{
-        //    try
-        //    {
-        //        return Ok(_mapper.Map<List<ReadVagaDto>>(_context.Vagas.Skip(skip).Take(take).Where(v => v.EmpresaId == id).ToList()));
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return BadRequest(ex);
-        //    }
-        //}
+        [HttpGet("empresa/{id}")]
+        public IActionResult ListarPorEmpresa(int id, [FromQuery] int skip = 0, [FromQuery] int take = 50)
+        {
+            try
+            {
+                return Ok(_mapper.Map<List<ReadVagaDto>>(_context.Vagas.Skip(skip).Take(take).Where(v => v.EmpresaId == id).ToList()));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
 
         [HttpDelete("{id}")]
         public IActionResult Deletar(int id)

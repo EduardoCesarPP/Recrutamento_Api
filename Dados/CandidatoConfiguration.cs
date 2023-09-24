@@ -31,9 +31,6 @@ namespace RecrutamentoApi.Dados
                 .WithOne(c => c.Candidato)
                 .HasForeignKey<Curriculo>(e => e.CandidatoId)
                 .IsRequired(false);
-
-            builder
-               .HasAlternateKey(c => new { c.Nome, c.Sobrenome });
         }
     }
 }
