@@ -10,6 +10,8 @@ namespace RecrutamentoApi.Profiles
         {
             CreateMap<CreateAdmnistradorDto, Admnistrador>();
 
+            CreateMap<UpdateAdmnistradorDto, Admnistrador>();
+
             CreateMap<Admnistrador, ReadAdmnistradorDto>();
 
         }

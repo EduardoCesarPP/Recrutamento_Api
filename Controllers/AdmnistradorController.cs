@@ -96,13 +96,13 @@ namespace RecrutamentoApi.Controllers
         }
 
         [HttpPut("{id}")]
-        public IActionResult Atualizar(int id, [FromBody] UpdateAdmnistradorDto curriculoDto)
+        public IActionResult Atualizar(int id, [FromBody] UpdateAdmnistradorDto admnistradorDto)
         {
             try
             {
-                var curriculo = _context.Curriculos.FirstOrDefault(curriculo => curriculo.CandidatoId == id);
-                if (curriculo == null) return NotFound();
-                _mapper.Map(curriculoDto, curriculo);
+                var admnistrador = _context.Admnistradores.FirstOrDefault(admnistrador => admnistrador.Id == id);
+                if (admnistrador == null) return NotFound();
+                _mapper.Map(admnistradorDto, admnistrador);
                 _context.SaveChanges();
                 return NoContent();
             }

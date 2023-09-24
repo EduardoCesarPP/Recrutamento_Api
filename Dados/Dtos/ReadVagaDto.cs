@@ -5,6 +5,7 @@ namespace RecrutamentoApi.Dados.Dtos
     {
         public virtual ReadEmpresaDto Empresa { get; set; }
         public string Nome { get; set; }
+        public int id { get; set; }
         public string TextoTipoVaga { get; private set; }
         public string TipoVaga { get; set; }
         [JsonConverter(typeof(DateOnlyJsonConverter))]

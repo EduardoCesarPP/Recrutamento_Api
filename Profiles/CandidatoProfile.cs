@@ -10,6 +10,8 @@ namespace RecrutamentoApi.Profiles
         {
             CreateMap<CreateCandidatoDto, Candidato>();
 
+            CreateMap<UpdateCandidatoDto, Candidato>();
+
             CreateMap<Candidato, ReadCandidatoDto>();
 
         }
