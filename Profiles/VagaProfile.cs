@@ -9,6 +9,7 @@ namespace RecrutamentoApi.Profiles
         public VagaProfile()
         {
             CreateMap<CreateVagaDto, Vaga>();
+            CreateMap<UpdateVagaDto, Vaga>();
 
             CreateMap<Vaga, ReadVagaDto>();
 
