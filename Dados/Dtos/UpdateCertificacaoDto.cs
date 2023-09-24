@@ -1,12 +1,11 @@
-﻿using RecrutamentoApi.Modelo;
-
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using RecrutamentoApi.Dados.Dtos.Interfaces;
 
 namespace RecrutamentoApi.Dados.Dtos
 {
-    public class ReadCertificacaoDto : IReadDto
+    public class UpdateCertificacaoDto : IUpdateDto
     {
+        public int  CandidatoId { get; set; }
         public string Titulo { get; set; }
         public string Organizacao { get; set; }
         [JsonConverter(typeof(DateOnlyJsonConverter))]

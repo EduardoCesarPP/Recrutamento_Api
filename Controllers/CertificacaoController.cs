@@ -8,37 +8,15 @@ namespace RecrutamentoApi.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class CertificacaoController : ControllerBase
+    public class CertificacaoController : CRUDController<Certificacao, CreateCertificacaoDto, UpdateCertificacaoDto, ReadCertificacaoDto>
     {
-        private RecrutamentoContext _context;
-        private IMapper _mapper;
-
-        public CertificacaoController(RecrutamentoContext context, IMapper mapper)
+        public CertificacaoController(RecrutamentoContext context, IMapper mapper) : base(context, mapper)
         {
-            _context = context;
-            _mapper = mapper;
-        }
 
-        [HttpPost]
-        [ProducesResponseType(StatusCodes.Status201Created)]
-
-        public IActionResult Cadastrar([FromBody] CreateCertificacaoDto certificacaoDto)
-        {
-            try
-            {
-                Certificacao certificacao = _mapper.Map<Certificacao>(certificacaoDto);
-                _context.Certificacoes.Add(certificacao);
-                _context.SaveChanges();
-                return CreatedAtAction(nameof(Listar), new { id = certificacao.CandidatoId }, certificacao);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex);
-            }
         }
 
         [HttpGet("candidato/{id}")]
-        public IActionResult Listar(int id, [FromQuery] int skip = 0, [FromQuery] int take = 50)
+        public IActionResult ListarPorCandidato(int id, [FromQuery] int skip = 0, [FromQuery] int take = 50)
         {
             try
             {
@@ -49,5 +27,35 @@ namespace RecrutamentoApi.Controllers
                 return BadRequest(ex);
             }
         }
+
+        protected override void Adicionar(Certificacao modelo)
+        {
+            _context.Certificacoes.Add(modelo);
+        }
+
+        [ApiExplorerSettings(IgnoreApi = true)]
+        public override IActionResult Listar([FromQuery] int skip = 0, [FromQuery] int take = 50)
+        {
+            throw new NotImplementedException();
+        }
+
+        [ApiExplorerSettings(IgnoreApi = true)]
+        public override IActionResult RecuperarPorId(int id)
+        {
+            throw new NotImplementedException();
+
+        }
+
+        protected override List<Certificacao> ObterListaModelo()
+        {
+            throw new NotImplementedException();
+        }
+
+        protected override Certificacao? ObterModelo(int id)
+        {
+            return _context.Certificacoes.FirstOrDefault(admnistrador => admnistrador.Id == id);
+        }
+
+
     }
 }

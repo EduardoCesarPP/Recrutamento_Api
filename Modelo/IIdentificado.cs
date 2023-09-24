@@ -1,6 +1,6 @@
 ﻿namespace RecrutamentoApi.Modelo
 {
-    public abstract class Identificado
+    public interface IIdentificado
     {
         public int Id { get; set; }
     }

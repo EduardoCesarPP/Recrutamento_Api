@@ -1,6 +1,8 @@
-﻿namespace RecrutamentoApi.Dados.Dtos
+﻿using RecrutamentoApi.Dados.Dtos.Interfaces;
+
+namespace RecrutamentoApi.Dados.Dtos
 {
-    public class CreateEmpresaDto
+    public class CreateEmpresaDto : ICreateDto
     {
         public int Id { get; set; }
         public string Cnpj { get; set; }

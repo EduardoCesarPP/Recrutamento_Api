@@ -9,123 +9,77 @@ namespace RecrutamentoApi.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class CandidatoController : ControllerBase
+    public class CandidatoController : CRUDLogavelController<Candidato, CreateCandidatoDto, UpdateCandidatoDto, ReadCandidatoDto>
     {
-        private RecrutamentoContext _context;
-        private IMapper _mapper;
-
-        public CandidatoController(RecrutamentoContext context, IMapper mapper)
+        public CandidatoController(RecrutamentoContext context, IMapper mapper) : base(context, mapper)
         {
-            _context = context;
-            _mapper = mapper;
+
         }
 
-        /// <summary>
-        /// Realiza o cadastro de um novo candidato.
-        /// </summary>
-        /// <param name="Nome">Nome do candidato</param>
-        /// <param name="Sobrenome">Sobrenome do candidato</param>
-        /// <param name="Email">E-mail do candidato</param>
-        /// <param name="Senha">Senha do candidato</param>
-        /// <returns>IActionResult</returns>
-        /// <response code="201">Caso o registro seja realizado com sucesso</response> 
-        /// <response code="400">Caso ocorra algum erro.</response> 
-        [HttpPost]
-        [ProducesResponseType(StatusCodes.Status201Created)]
-        public IActionResult Cadastrar([FromBody] CreateCandidatoDto candidatoDto)
+        protected override void Adicionar(Candidato modelo)
         {
-            try
-            {
-                Candidato candidato = _mapper.Map<Candidato>(candidatoDto);
-                _context.Candidatos.Add(candidato);
-                _context.SaveChanges();
-                return CreatedAtAction(nameof(RecuperarPorId), new { id = candidato.Id }, candidato);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex);
-            }
+            _context.Candidatos.Add(modelo);
+        }
+        protected override List<Candidato> ObterListaModelo()
+        {
+            return _context.Candidatos.ToList();
+        }
+        protected override Candidato? ObterModelo(int id)
+        {
+            return _context.Candidatos.FirstOrDefault(admnistrador => admnistrador.Id == id);
+        }
+        protected override Candidato ObterModeloLogin(string email, string senha)
+        {
+            return _context.Candidatos.FirstOrDefault(candidato => candidato.Email == email && candidato.Senha == senha);
         }
 
-        [HttpPut("{id}")]
-        public IActionResult Atualizar(int id, [FromBody] UpdateCandidatoDto candidatoDto)
-        {
-            try
-            {
-                var candidato = _context.Candidatos.FirstOrDefault(candidato => candidato.Id == id);
-                if (candidato == null) return NotFound();
-                _mapper.Map(candidatoDto, candidato);
-                _context.SaveChanges();
-                return NoContent();
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex);
-            }
-        }
-
-        [HttpDelete("{id}")]
-        public IActionResult Deletar(int id)
-        {
-            try
-            {
-                var candidato = _context.Candidatos.FirstOrDefault(candidato => candidato.Id == id);
-                if (candidato == null) return NotFound();
-                _context.Remove(candidato);
-                _context.SaveChanges();
-                return NoContent();
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex);
-            }
-        }
-
-        [HttpGet("{id}")]
-        public IActionResult RecuperarPorId(int id)
-        {
-            try
-            {
-                var candidato = _context.Candidatos.FirstOrDefault(candidato => candidato.Id == id);
-                if (candidato == null) return NotFound();
-                var candidatoDto = _mapper.Map<ReadCandidatoDto>(candidato);
-                return Ok(candidatoDto);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex);
-            }
-        }
-
-        [HttpGet("login")]
-        public IActionResult Logar([FromQuery] string email, [FromQuery] string senha)
-        {
-            try
-            {
-                var candidato = _context.Candidatos.FirstOrDefault(candidato => candidato.Email == email && candidato.Senha == senha);
-                if (candidato == null)
-                {
-                    return NotFound();
-                }
-                return Ok(_mapper.Map<ReadCandidatoDto>(candidato));
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex);
-            }
-        }
-
-        [HttpGet]
-        public IActionResult Listar(
+        [HttpGet("listaFiltrada")]
+        public new IActionResult ListarComFiltros(
             [FromQuery] int skip = 0,
             [FromQuery] int take = 50,
             [FromQuery] List<string>? nomesIdiomas = null,
             [FromQuery] List<string>? nomesRacas = null,
-            [FromQuery] List<string>? nomesDeficiencias = null)
+            [FromQuery] bool? deficienciaVisual = null,
+            [FromQuery] bool? deficienciaAuditiva = null,
+            [FromQuery] bool? deficienciaAutista = null,
+            [FromQuery] bool? deficienciaFisica = null,
+            [FromQuery] bool? deficienciaIntelectual = null)
         {
             try
             {
-                var candidatos = _context.Candidatos.Skip(skip).Take(take).ToList();
+                var candidatos = ObterListaModelo().Skip(skip).Take(take);
+
+                if (nomesIdiomas is not null && nomesIdiomas.Count > 0)
+                {
+                    candidatos = candidatos.Where(c => c.Curriculo.Proficiencias.Any(p => nomesIdiomas.Contains(p.Idioma.Nome))).ToList();
+                }
+
+                if (nomesRacas is not null && nomesRacas.Count > 0)
+                {
+                    candidatos = candidatos.Where(c => nomesRacas.Contains(c.Curriculo.TextoRaca)).ToList();
+                }
+
+                if (deficienciaAuditiva is not null && (bool)deficienciaAuditiva)
+                {
+                    candidatos = candidatos.Where(c => c.Curriculo.DeficienciaAuditiva).ToList();
+                }
+                if (deficienciaAutista is not null && (bool)deficienciaAutista)
+                {
+                    candidatos = candidatos.Where(c => c.Curriculo.DeficienciaAutista).ToList();
+                }
+                if (deficienciaFisica is not null && (bool)deficienciaFisica)
+                {
+                    candidatos = candidatos.Where(c => c.Curriculo.DeficienciaFisica).ToList();
+                }
+                if (deficienciaVisual is not null && (bool)deficienciaVisual)
+                {
+                    candidatos = candidatos.Where(c => c.Curriculo.DeficienciaVisual).ToList();
+                }
+                if (deficienciaIntelectual is not null && (bool)deficienciaIntelectual)
+                {
+                    candidatos = candidatos.Where(c => c.Curriculo.DeficienciaIntelectual).ToList();
+                }
+
                 return Ok(_mapper.Map<List<ReadCandidatoDto>>(candidatos));
             }
             catch (Exception ex)

@@ -1,6 +1,8 @@
-﻿namespace RecrutamentoApi.Dados.Dtos
+﻿using RecrutamentoApi.Dados.Dtos.Interfaces;
+
+namespace RecrutamentoApi.Dados.Dtos
 {
-    public class ReadEmpresaDto
+    public class ReadEmpresaDto : IReadDto
     {
         public int Id { get; set; }
         public string Cnpj { get; set; }

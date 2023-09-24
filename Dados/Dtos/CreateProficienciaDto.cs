@@ -1,6 +1,8 @@
-﻿namespace RecrutamentoApi.Dados.Dtos
+﻿using RecrutamentoApi.Dados.Dtos.Interfaces;
+
+namespace RecrutamentoApi.Dados.Dtos
 {
-    public class CreateProficienciaDto
+    public class CreateProficienciaDto : ICreateDto
     {
         public int CandidatoId { get; set; }
         public int IdiomaId { get; set; }

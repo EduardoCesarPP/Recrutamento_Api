@@ -1,7 +1,9 @@
 ﻿using Newtonsoft.Json;
+using RecrutamentoApi.Dados.Dtos.Interfaces;
+
 namespace RecrutamentoApi.Dados.Dtos
 {
-    public class CreateFormacaoAcademicaDto
+    public class CreateFormacaoAcademicaDto : ICreateDto
     {
         public int  CandidatoId { get; set; }
         public string NivelFormacao { get; set; }

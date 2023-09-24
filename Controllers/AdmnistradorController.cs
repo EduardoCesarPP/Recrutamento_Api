@@ -12,19 +12,19 @@ namespace RecrutamentoApi.Controllers
     {
         public AdmnistradorController(RecrutamentoContext context, IMapper mapper) : base(context, mapper)
         {           
-        }        
+        }
 
-        public override void Adicionar(Admnistrador modelo)
+        protected override void Adicionar(Admnistrador modelo)
         {
             _context.Admnistradores.Add(modelo);
         }
 
-        public override List<Admnistrador> ObterListaModelo()
+        protected override List<Admnistrador> ObterListaModelo()
         {
             return _context.Admnistradores.ToList();
         }
 
-        public override Admnistrador? ObterModelo(int id)
+        protected override Admnistrador? ObterModelo(int id)
         {
             return _context.Admnistradores.FirstOrDefault(admnistrador => admnistrador.Id == id);
         }

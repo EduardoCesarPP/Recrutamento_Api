@@ -1,6 +1,6 @@
 ﻿namespace RecrutamentoApi.Modelo
 {
-    public class Certificacao
+    public class Certificacao : IIdentificado
     {
         public int Id { get; set; }
         public virtual Curriculo Curriculo { get; set; }

@@ -6,7 +6,7 @@ namespace RecrutamentoApi.Extensions
     {
         private static Dictionary<string, NivelProficiencia> mapa = new Dictionary<string, NivelProficiencia>
         {
-            { "Básico", NivelProficiencia.BASICO },
+            { "Basico", NivelProficiencia.BASICO },
             { "Intermediário", NivelProficiencia.INTERMEDIARIO },
             { "Avançado", NivelProficiencia.AVANCADO }
         };

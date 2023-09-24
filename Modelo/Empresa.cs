@@ -1,6 +1,6 @@
 ﻿namespace RecrutamentoApi.Modelo
 {
-    public class Empresa
+    public class Empresa : ILogavel, IIdentificado
     {
         public int Id { get; set; }
         public string Cnpj { get; set; }

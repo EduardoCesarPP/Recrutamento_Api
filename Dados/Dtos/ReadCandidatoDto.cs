@@ -1,7 +1,9 @@
 ﻿
+using RecrutamentoApi.Dados.Dtos.Interfaces;
+
 namespace RecrutamentoApi.Dados.Dtos
 {
-    public class ReadCandidatoDto
+    public class ReadCandidatoDto : IReadDto
     {
         public int Id { get; set; }
         public string Nome { get; set; }

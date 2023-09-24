@@ -1,7 +1,9 @@
 ﻿using Newtonsoft.Json;
+using RecrutamentoApi.Dados.Dtos.Interfaces;
+
 namespace RecrutamentoApi.Dados.Dtos
 {
-    public class CreateVagaDto
+    public class CreateVagaDto : ICreateDto
     {
         public int EmpresaId { get; set; }
         public string Nome { get; set; }

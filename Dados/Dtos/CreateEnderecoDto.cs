@@ -1,6 +1,8 @@
-﻿namespace RecrutamentoApi.Dados.Dtos
+﻿using RecrutamentoApi.Dados.Dtos.Interfaces;
+
+namespace RecrutamentoApi.Dados.Dtos
 {
-    public class CreateEnderecoDto
+    public class CreateEnderecoDto : ICreateDto
     {
         public string CEP { get; set; }
         public string Rua { get; set; }

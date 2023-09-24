@@ -7,12 +7,12 @@ using RecrutamentoApi.Modelo;
 
 namespace RecrutamentoApi.Controllers
 {
-    public abstract class CRUDCotroller<Tipo, Create, Update, Read> : ControllerBase where Tipo : Identificado where Create : ICreateDto where Update : IUpdateDto where Read : IReadDto
+    public abstract class CRUDController<Tipo, Create, Update, Read> : ControllerBase where Tipo : IIdentificado where Create : ICreateDto where Update : IUpdateDto where Read : IReadDto
     {
         protected RecrutamentoContext _context;
         protected IMapper _mapper;
 
-        public CRUDCotroller(RecrutamentoContext context, IMapper mapper)
+        public CRUDController(RecrutamentoContext context, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;
@@ -23,7 +23,7 @@ namespace RecrutamentoApi.Controllers
         /// <response code="400">Caso ocorra algum erro.</response> 
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
-        public IActionResult Cadastrar([FromBody] Create createDto)
+        public virtual IActionResult Cadastrar([FromBody] Create createDto)
         {
             Tipo modelo = _mapper.Map<Tipo>(createDto);
             Adicionar(modelo);
@@ -31,7 +31,7 @@ namespace RecrutamentoApi.Controllers
             return CreatedAtAction(nameof(RecuperarPorId), new { id = modelo.Id }, modelo);
         }
         [HttpGet("{id}")]
-        public IActionResult RecuperarPorId(int id)
+        public virtual IActionResult RecuperarPorId(int id)
         {
             var modelo = ObterModelo(id);
             if (modelo == null) return NotFound();
@@ -39,12 +39,14 @@ namespace RecrutamentoApi.Controllers
             return Ok(readDto);
         }
         [HttpGet]
-        public IActionResult Listar([FromQuery] int skip = 0, [FromQuery] int take = 50)
+        public virtual IActionResult Listar([FromQuery] int skip = 0, [FromQuery] int take = 50)
         {
             return Ok(_mapper.Map<List<Read>>(ObterListaModelo().Skip(skip).Take(take)));
         }
+
+
         [HttpPut("{id}")]
-        public IActionResult Atualizar(int id, [FromBody] Update updateDto)
+        public virtual IActionResult Atualizar(int id, [FromBody] Update updateDto)
         {
             var modelo = ObterModelo(id);
             if (modelo == null) return NotFound();
@@ -53,7 +55,7 @@ namespace RecrutamentoApi.Controllers
             return NoContent();
         }
         [HttpDelete("{id}")]
-        public IActionResult Deletar(int id)
+        public virtual IActionResult Deletar(int id)
         {
             try
             {
@@ -69,12 +71,14 @@ namespace RecrutamentoApi.Controllers
             }
         }
 
+        //-/////////////////////////////////
+
         [ApiExplorerSettings(IgnoreApi = true)]
-        public abstract Tipo? ObterModelo(int id);
+        protected abstract Tipo? ObterModelo(int id);
         [ApiExplorerSettings(IgnoreApi = true)]
-        public abstract List<Tipo> ObterListaModelo();
+        protected abstract List<Tipo> ObterListaModelo();
         [ApiExplorerSettings(IgnoreApi = true)]
-        public abstract void Adicionar(Tipo modelo);
+        protected abstract void Adicionar(Tipo modelo);
     }
 }
 
