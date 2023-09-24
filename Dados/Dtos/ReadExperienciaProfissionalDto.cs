@@ -1,7 +1,9 @@
 ﻿using Newtonsoft.Json;
+using RecrutamentoApi.Dados.Dtos.Interfaces;
+
 namespace RecrutamentoApi.Dados.Dtos
 {
-    public class ReadExperienciaProfissionalDto
+    public class ReadExperienciaProfissionalDto : IReadDto
     {
         public string Titulo { get; set; }
         public string TipoEmprego { get; set; }

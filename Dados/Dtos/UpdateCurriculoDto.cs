@@ -1,9 +1,10 @@
 ﻿using Newtonsoft.Json;
+using RecrutamentoApi.Dados.Dtos.Interfaces;
 using RecrutamentoApi.Modelo;
 
 namespace RecrutamentoApi.Dados.Dtos
 {
-    public class UpdateCurriculoDto
+    public class UpdateCurriculoDto : IUpdateDto
     {
         public int CandidatoId { get; set; }
         [JsonConverter(typeof(DateOnlyJsonConverter))]

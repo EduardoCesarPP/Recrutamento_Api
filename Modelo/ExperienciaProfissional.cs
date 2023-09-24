@@ -1,6 +1,6 @@
 ﻿namespace RecrutamentoApi.Modelo
 {
-    public class ExperienciaProfissional
+    public class ExperienciaProfissional : IIdentificado
     {
         public int Id { get; set; }
         public virtual Curriculo Curriculo { get; set; }

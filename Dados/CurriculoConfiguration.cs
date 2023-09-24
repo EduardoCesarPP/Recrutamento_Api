@@ -73,6 +73,7 @@ namespace RecrutamentoApi.Dados
 
 
 
+            builder.Ignore(c => c.Id);
             builder.Ignore(c => c.Genero);
             builder.Ignore(c => c.Raca);
             //builder.Ignore(c => c.Deficiencias);

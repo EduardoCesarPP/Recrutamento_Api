@@ -9,88 +9,17 @@ namespace RecrutamentoApi.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class CurriculoController : ControllerBase
+    public class CurriculoController : CRUDController<Curriculo, CreateCurriculoDto, UpdateCurriculoDto, ReadCurriculoDto>
     {
-        private RecrutamentoContext _context;
-        private IMapper _mapper;
 
-        public CurriculoController(RecrutamentoContext context, IMapper mapper)
+
+        public CurriculoController(RecrutamentoContext context, IMapper mapper) : base(context, mapper)
         {
-            _context = context;
-            _mapper = mapper;
+
         }
 
-        [HttpPost]
-        [ProducesResponseType(StatusCodes.Status201Created)]
-        public IActionResult Cadastrar([FromBody] CreateCurriculoDto curriculoDto)
-        {
-            try
-            {
-                Curriculo curriculo = _mapper.Map<Curriculo>(curriculoDto);
-                _context.Enderecos.Add(curriculo.Endereco);
-                _context.Curriculos.Add(curriculo);
-                _context.SaveChanges();
-                return CreatedAtAction(nameof(RecuperarPorId), new { id = curriculo.CandidatoId }, curriculo);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex);
-            }
-        }
-
-
-        [HttpPut("{id}")]
-        public IActionResult Atualizar(int id, [FromBody] UpdateCurriculoDto curriculoDto)
-        {
-            try
-            {
-                var curriculo = _context.Curriculos.FirstOrDefault(curriculo => curriculo.CandidatoId == id);
-                if (curriculo == null) return NotFound();
-                _mapper.Map(curriculoDto, curriculo);
-                _context.SaveChanges();
-                return NoContent();
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex);
-            }
-        }
-
-        [HttpDelete("{id}")]
-        public IActionResult Deletar(int id)
-        {
-            try
-            {
-                var curriculo = _context.Curriculos.FirstOrDefault(curriculo => curriculo.CandidatoId == id);
-                if (curriculo == null) return NotFound();
-                _context.Remove(curriculo);
-                _context.SaveChanges();
-                return NoContent();
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex);
-            }
-        }
-
-        [HttpGet("{id}")]
-        public IActionResult RecuperarPorId(int id)
-        {
-            try
-            {
-                var curriculo = _context.Curriculos.FirstOrDefault(curriculo => curriculo.CandidatoId == id);
-                if (curriculo == null) return NotFound();
-                var curriculoDto = _mapper.Map<ReadCurriculoDto>(curriculo);
-                return Ok(curriculoDto);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex);
-            }
-        }
-
-        [HttpGet]
-        public IActionResult Listar(
+        [HttpGet("listaFiltrada")]
+        public IActionResult ListarComFiltros(
             [FromQuery] int skip = 0,
             [FromQuery] int take = 50,
             [FromQuery] List<string>? nomesIdiomas = null,
@@ -105,7 +34,7 @@ namespace RecrutamentoApi.Controllers
         {
             try
             {
-                var curriculos = _context.Curriculos.Skip(skip).Take(take).ToList();
+                var curriculos = ObterListaModelo().Skip(skip).Take(take);
                 if (nomesIdiomas != null && nomesIdiomas.Count() > 0)
                 {
                     curriculos = curriculos.Where(curriculo => curriculo.Proficiencias is not null && curriculo.Proficiencias.Any(proficiencia => nomesIdiomas.Contains(proficiencia.Idioma.Nome))).ToList();
@@ -134,13 +63,29 @@ namespace RecrutamentoApi.Controllers
                 {
                     curriculos = curriculos.Where(curriculo => curriculo.DeficienciaIntelectual).ToList();
                 }
-                
+
                 return Ok(_mapper.Map<List<ReadCurriculoDto>>(curriculos));
             }
             catch (Exception ex)
             {
                 return BadRequest(ex);
             }
+        }
+
+        protected override Curriculo? ObterModelo(int id)
+        {
+            return _context.Curriculos.FirstOrDefault(curriculo => curriculo.CandidatoId == id);
+        }
+
+        protected override List<Curriculo> ObterListaModelo()
+        {
+            return _context.Curriculos.ToList();
+        }
+
+        protected override void Adicionar(Curriculo modelo)
+        {
+            _context.Enderecos.Add(modelo.Endereco);
+            _context.Curriculos.Add(modelo);
         }
     }
 }

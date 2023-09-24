@@ -2,7 +2,7 @@
 
 namespace RecrutamentoApi.Modelo
 {
-    public class FormacaoAcademica
+    public class FormacaoAcademica : IIdentificado
     {
         public int Id { get; set; }
         public virtual Curriculo Curriculo { get; set; }

@@ -8,45 +8,70 @@ namespace RecrutamentoApi.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class ExperienciaProfissionalController : ControllerBase
+    public class ExperienciaProfissionalController : CRUDController<ExperienciaProfissional, CreateExperienciaProfissionalDto, UpdateExperienciaProfissionalDto, ReadExperienciaProfissionalDto>
     {
-        private RecrutamentoContext _context;
-        private IMapper _mapper;
-
-        public ExperienciaProfissionalController(RecrutamentoContext context, IMapper mapper)
+     
+        public ExperienciaProfissionalController(RecrutamentoContext context, IMapper mapper) : base(context, mapper)
         {
-            _context = context;
-            _mapper = mapper;
+         
         }
 
-        [HttpPost]
-        [ProducesResponseType(StatusCodes.Status201Created)]
 
-        public IActionResult Cadastrar([FromBody] CreateExperienciaProfissionalDto experienciaProfissionalDto)
-        {
-            try
-            {
-                ExperienciaProfissional experienciaProfissional = _mapper.Map<ExperienciaProfissional>(experienciaProfissionalDto);
-                _context.ExperienciasProfissionais.Add(experienciaProfissional);
-                _context.SaveChanges();
-                return CreatedAtAction(nameof(Listar), new { id = experienciaProfissional.CandidatoId }, experienciaProfissional);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex);
-            }
-        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         [HttpGet("candidato/{id}")]
-        public IActionResult Listar(int id, [FromQuery] int skip = 0, [FromQuery] int take = 50)
+        public IActionResult ListarPorCandidato(int id, [FromQuery] int skip = 0, [FromQuery] int take = 50)
         {
             try
             {
-                return Ok(_mapper.Map<List<ReadExperienciaProfissionalDto>>(_context.Curriculos.Where(c => c.CandidatoId == id).FirstOrDefault().ExperienciasProfissionais.ToList()));
+                return Ok(_mapper.Map<List<ReadCertificacaoDto>>(_context.Curriculos.Where(c => c.CandidatoId == id).FirstOrDefault().Certificacoes.ToList()));
             }
             catch (Exception ex)
             {
                 return BadRequest(ex);
             }
+        }
+
+        protected override void Adicionar(ExperienciaProfissional modelo)
+        {
+            _context.ExperienciasProfissionais.Add(modelo);
+        }
+
+        [ApiExplorerSettings(IgnoreApi = true)]
+        public override IActionResult Listar([FromQuery] int skip = 0, [FromQuery] int take = 50)
+        {
+            throw new NotImplementedException();
+        }
+
+        [ApiExplorerSettings(IgnoreApi = true)]
+        public override IActionResult RecuperarPorId(int id)
+        {
+            throw new NotImplementedException();
+
+        }
+
+        protected override List<ExperienciaProfissional> ObterListaModelo()
+        {
+            throw new NotImplementedException();
+        }
+
+        protected override ExperienciaProfissional? ObterModelo(int id)
+        {
+            return _context.ExperienciasProfissionais.FirstOrDefault(admnistrador => admnistrador.Id == id);
         }
     }
 }

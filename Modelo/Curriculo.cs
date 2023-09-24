@@ -2,8 +2,10 @@
 
 namespace RecrutamentoApi.Modelo
 {
-    public class Curriculo
+    public class Curriculo : IIdentificado
+
     {
+        public int Id { get => CandidatoId; set => CandidatoId = value; }
         public int CandidatoId { get; set; }
         public virtual Candidato Candidato { get; set; }
         public DateOnly DataNascimento { get; set; }

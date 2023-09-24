@@ -8,34 +8,16 @@ namespace RecrutamentoApi.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class FormacaoAcademicaController : ControllerBase
+    public class FormacaoAcademicaController : CRUDController<FormacaoAcademica, CreateFormacaoAcademicaDto, UpdateFormacaoAcademicaDto, ReadFormacaoAcademicaDto>
     {
         private RecrutamentoContext _context;
         private IMapper _mapper;
 
-        public FormacaoAcademicaController(RecrutamentoContext context, IMapper mapper)
+        public FormacaoAcademicaController(RecrutamentoContext context, IMapper mapper) : base(context,mapper)
         {
-            _context = context;
-            _mapper = mapper;
+            
         }
 
-        [HttpPost]
-        [ProducesResponseType(StatusCodes.Status201Created)]
-
-        public IActionResult Cadastrar([FromBody] CreateFormacaoAcademicaDto formacaoAcademicaDto)
-        {
-            try
-            {
-                FormacaoAcademica formacaoAcademica = _mapper.Map<FormacaoAcademica>(formacaoAcademicaDto);
-                _context.FormacoesAcademicas.Add(formacaoAcademica);
-                _context.SaveChanges();
-                return CreatedAtAction(nameof(Listar), new { id = formacaoAcademica.CandidatoId }, formacaoAcademica);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex);
-            }
-        }
         [HttpGet("candidato/{id}")]
         public IActionResult Listar(int id, [FromQuery] int skip = 0, [FromQuery] int take = 50)
         {
@@ -47,6 +29,33 @@ namespace RecrutamentoApi.Controllers
             {
                 return BadRequest(ex);
             }
+        }
+        protected override void Adicionar(FormacaoAcademica modelo)
+        {
+            _context.FormacoesAcademicas.Add(modelo);
+        }
+
+        [ApiExplorerSettings(IgnoreApi = true)]
+        public override IActionResult Listar([FromQuery] int skip = 0, [FromQuery] int take = 50)
+        {
+            throw new NotImplementedException();
+        }
+
+        [ApiExplorerSettings(IgnoreApi = true)]
+        public override IActionResult RecuperarPorId(int id)
+        {
+            throw new NotImplementedException();
+
+        }
+
+        protected override List<FormacaoAcademica> ObterListaModelo()
+        {
+            throw new NotImplementedException();
+        }
+
+        protected override FormacaoAcademica? ObterModelo(int id)
+        {
+            return _context.FormacoesAcademicas.FirstOrDefault(admnistrador => admnistrador.Id == id);
         }
     }
 }

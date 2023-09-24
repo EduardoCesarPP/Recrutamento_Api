@@ -1,6 +1,8 @@
-﻿namespace RecrutamentoApi.Dados.Dtos
+﻿using RecrutamentoApi.Dados.Dtos.Interfaces;
+
+namespace RecrutamentoApi.Dados.Dtos
 {
-    public class UpdateEmpresaDto
+    public class UpdateEmpresaDto : IUpdateDto
     {
         public string Cnpj { get; set; }
         public string RazaoSocial { get; set; }
