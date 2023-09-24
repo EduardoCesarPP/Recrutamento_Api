@@ -51,6 +51,11 @@ namespace RecrutamentoApi.Dados
                 .WithOne(e => e.Curriculo)
                 .HasForeignKey(e => e.CandidatoId);
 
+            builder
+               .HasMany(c => c.Proficiencias)
+               .WithOne(p => p.Curriculo)
+               .HasForeignKey(p => p.CandidatoId);
+
             //builder
             //    .HasOne(c => c.Candidato);
 
