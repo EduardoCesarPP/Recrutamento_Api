@@ -1,9 +1,10 @@
-﻿using RecrutamentoApi.Modelo;
+﻿using RecrutamentoApi.Dados.Dtos.Interfaces;
+using RecrutamentoApi.Modelo;
 using System.ComponentModel.DataAnnotations;
 
 namespace RecrutamentoApi.Dados.Dtos
 {
-    public class CreateAdmnistradorDto
+    public class CreateAdmnistradorDto : ICreateDto
     {
         public string Nome { get; set; }
         public string Sobrenome { get; set; }

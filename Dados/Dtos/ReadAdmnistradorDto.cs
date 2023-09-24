@@ -1,7 +1,9 @@
 ﻿
+using RecrutamentoApi.Dados.Dtos.Interfaces;
+
 namespace RecrutamentoApi.Dados.Dtos
 {
-    public class ReadAdmnistradorDto
+    public class ReadAdmnistradorDto : IReadDto
     {
         public int Id { get; set; }
         public string Nome { get; set; }

@@ -1,8 +1,7 @@
 ﻿namespace RecrutamentoApi.Modelo
 {
-    public class Admnistrador
+    public class Admnistrador : Identificado
     {
-        public int Id { get; set; }
         public string Nome { get; set; }
         public string Sobrenome { get; set; }
         public string Email { get; set; }

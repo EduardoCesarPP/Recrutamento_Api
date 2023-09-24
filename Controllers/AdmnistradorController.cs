@@ -8,125 +8,30 @@ namespace RecrutamentoApi.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class AdmnistradorController : ControllerBase
+    public class AdmnistradorController : CRUDLogavelController<Admnistrador, CreateAdmnistradorDto, UpdateAdmnistradorDto, ReadAdmnistradorDto>
     {
-        private RecrutamentoContext _context;
-        private IMapper _mapper;
+        public AdmnistradorController(RecrutamentoContext context, IMapper mapper) : base(context, mapper)
+        {           
+        }        
 
-        public AdmnistradorController(RecrutamentoContext context, IMapper mapper)
+        public override void Adicionar(Admnistrador modelo)
         {
-            _context = context;
-            _mapper = mapper;
+            _context.Admnistradores.Add(modelo);
         }
 
-        /// <summary>
-        /// Realiza o cadastro de um novo admnistrador.
-        /// </summary>
-        /// <param name="Nome">Nome do admnistrador</param>
-        /// <param name="Sobrenome">Sobrenome do admnistrador</param>
-        /// <param name="Email">E-mail do admnistrador</param>
-        /// <param name="Senha">Senha do admnistrador</param>
-        /// <returns>IActionResult</returns>
-        /// <response code="201">Caso o registro seja realizado com sucesso</response> 
-        /// <response code="400">Caso ocorra algum erro.</response> 
-        /// 
-        [HttpPost]
-        [ProducesResponseType(StatusCodes.Status201Created)]
-
-        public IActionResult Cadastrar([FromBody] CreateAdmnistradorDto admnistradorDto)
+        public override List<Admnistrador> ObterListaModelo()
         {
-            try
-            {
-                Admnistrador admnistrador = _mapper.Map<Admnistrador>(admnistradorDto);
-                _context.Admnistradores.Add(admnistrador);
-                _context.SaveChanges();
-                return CreatedAtAction(nameof(RecuperarPorId), new { id = admnistrador.Id }, admnistrador);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex);
-            }
+            return _context.Admnistradores.ToList();
         }
 
-        [HttpGet("{id}")]
-        public IActionResult RecuperarPorId(int id)
+        public override Admnistrador? ObterModelo(int id)
         {
-            try
-            {
-                var admnistrador = _context.Admnistradores.FirstOrDefault(admnistrador => admnistrador.Id == id);
-                if (admnistrador == null) return NotFound();
-                var admnistradorDto = _mapper.Map<ReadAdmnistradorDto>(admnistrador);
-                return Ok(admnistradorDto);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex);
-            }
+            return _context.Admnistradores.FirstOrDefault(admnistrador => admnistrador.Id == id);
         }
 
-        [HttpGet]
-        public IActionResult Listar([FromQuery] int skip = 0, [FromQuery] int take = 50)
+        protected override Admnistrador ObterModeloLogin(string email, string senha)
         {
-            try
-            {
-                return Ok(_mapper.Map<List<ReadAdmnistradorDto>>(_context.Admnistradores.Skip(skip).Take(take).ToList()));
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex);
-            }
-        }
-
-        [HttpGet("login")]
-        public IActionResult Logar([FromQuery] string email, [FromQuery] string senha)
-        {
-            try
-            {
-                var admnistrador = _context.Admnistradores.FirstOrDefault(admnistrador => admnistrador.Email == email && admnistrador.Senha == senha);
-                if (admnistrador == null)
-                {
-                    Response.StatusCode = 404;
-                }
-                return Ok(_mapper.Map<ReadAdmnistradorDto>(admnistrador));
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex);
-            }
-        }
-
-        [HttpPut("{id}")]
-        public IActionResult Atualizar(int id, [FromBody] UpdateAdmnistradorDto curriculoDto)
-        {
-            try
-            {
-                var curriculo = _context.Curriculos.FirstOrDefault(curriculo => curriculo.CandidatoId == id);
-                if (curriculo == null) return NotFound();
-                _mapper.Map(curriculoDto, curriculo);
-                _context.SaveChanges();
-                return NoContent();
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex);
-            }
-        }
-
-        [HttpDelete("{id}")]
-        public IActionResult Deletar(int id)
-        {
-            try
-            {
-                var curriculo = _context.Curriculos.FirstOrDefault(curriculo => curriculo.CandidatoId == id);
-                if (curriculo == null) return NotFound();
-                _context.Remove(curriculo);
-                _context.SaveChanges();
-                return NoContent();
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex);
-            }
+            return _context.Admnistradores.FirstOrDefault(candidato => candidato.Email == email && candidato.Senha == senha);
         }
     }
 }
