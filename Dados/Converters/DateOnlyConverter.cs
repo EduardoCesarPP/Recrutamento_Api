@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace RecrutamentoApi.Dados
+namespace RecrutamentoApi.Dados.Converters
 {
     public class DateOnlyConverter : ValueConverter<DateOnly, DateTime>
     {

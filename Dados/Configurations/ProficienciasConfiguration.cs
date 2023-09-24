@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using RecrutamentoApi.Modelo;
 
-namespace RecrutamentoApi.Dados
+namespace RecrutamentoApi.Dados.Configurations
 {
    
 
@@ -12,13 +12,13 @@ namespace RecrutamentoApi.Dados
         {
 
             builder
-                .HasKey(proficiencia => new { proficiencia.CurriculoId, proficiencia.IdiomaId });
+                .HasKey(proficiencia => new { proficiencia.CandidatoId, proficiencia.IdiomaId });
 
             // Relação Sessao n:1 Cinema
             builder
                 .HasOne(proficiencia => proficiencia.Curriculo)
                 .WithMany(candidato => candidato.Proficiencias)
-                .HasForeignKey(idioma => idioma.CurriculoId);
+                .HasForeignKey(idioma => idioma.CandidatoId);
 
             // Relação Sessao n:1 Filme
             builder

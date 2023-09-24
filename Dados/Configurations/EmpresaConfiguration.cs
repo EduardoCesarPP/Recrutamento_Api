@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using RecrutamentoApi.Modelo;
 
-namespace RecrutamentoApi.Dados
+namespace RecrutamentoApi.Dados.Configurations
 {
 
 

@@ -1,4 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using RecrutamentoApi.Dados.Configurations;
+using RecrutamentoApi.Dados.Converters;
 using RecrutamentoApi.Modelo;
 
 namespace RecrutamentoApi.Dados

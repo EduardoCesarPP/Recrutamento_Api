@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RecrutamentoApi.Extensions;
 using RecrutamentoApi.Modelo;
 
-namespace RecrutamentoApi.Dados
+namespace RecrutamentoApi.Dados.Configurations
 {
     public class CurriculoConfiguration : IEntityTypeConfiguration<Curriculo>
     {

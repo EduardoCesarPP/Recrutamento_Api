@@ -2,11 +2,11 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using RecrutamentoApi.Modelo;
 
-namespace RecrutamentoApi.Dados
+namespace RecrutamentoApi.Dados.Configurations
 {
-    public class FormacaoAcademicaConfiguration : IEntityTypeConfiguration<FormacaoAcademica>
+    public class ExperienciaProfissionalConfiguration : IEntityTypeConfiguration<ExperienciaProfissional>
     {
-        public void Configure(EntityTypeBuilder<FormacaoAcademica> builder)
+        public void Configure(EntityTypeBuilder<ExperienciaProfissional> builder)
         {
             builder
                  .Property(e => e.DataInicio)
@@ -16,8 +16,6 @@ namespace RecrutamentoApi.Dados
                .Property(e => e.DataFim)
                .HasColumnType("date");
 
-            builder
-                .Ignore(proficiencia => proficiencia.NivelFormacao);
         }
     }
 }
